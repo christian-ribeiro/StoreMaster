@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StoreMaster.Arguments.Arguments.Base;
-using StoreMaster.Domain.Interface.Service;
+using StoreMaster.Domain.Interface.Service.Base;
 
 namespace StoreMaster.API.Controllers.Base
 {
+    [ApiController]
+    [Route("/api/[controller]")]
     public class BaseController<TService, TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete>(TService service) : Controller
         where TService : IBaseService<TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete>
         where TOutput : BaseOutput<TOutput>

@@ -1,5 +1,4 @@
-﻿using StoreMaster.Arguments.Arguments;
-using StoreMaster.Domain.DTO;
+﻿using StoreMaster.Domain.DTO;
 using StoreMaster.Infrastructure.Persistence.Entry.Base;
 using System.Text.Json.Serialization;
 

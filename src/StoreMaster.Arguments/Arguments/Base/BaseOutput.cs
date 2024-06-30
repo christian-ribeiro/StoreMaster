@@ -1,6 +1,4 @@
-﻿using System.Formats.Tar;
-
-namespace StoreMaster.Arguments.Arguments.Base
+﻿namespace StoreMaster.Arguments.Arguments.Base
 {
     public class BaseOutput<TOutput> where TOutput : BaseOutput<TOutput>
     {

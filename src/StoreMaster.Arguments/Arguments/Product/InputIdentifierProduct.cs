@@ -2,7 +2,7 @@
 
 namespace StoreMaster.Arguments.Arguments
 {
-    public class InputIdentifierProduct: BaseInputIdentifier<InputIdentifierProduct>
+    public class InputIdentifierProduct : BaseInputIdentifier<InputIdentifierProduct>
     {
         public InputIdentifierProduct() { }
     }

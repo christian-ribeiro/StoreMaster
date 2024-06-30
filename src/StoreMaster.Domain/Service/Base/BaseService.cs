@@ -1,7 +1,7 @@
 ﻿using StoreMaster.Arguments.Arguments.Base;
 using StoreMaster.Domain.DTO.Base;
 using StoreMaster.Domain.Interface.Repository.Base;
-using StoreMaster.Domain.Interface.Service;
+using StoreMaster.Domain.Interface.Service.Base;
 
 namespace StoreMaster.Domain.Service.Base
 {
@@ -54,7 +54,7 @@ namespace StoreMaster.Domain.Service.Base
         {
             throw new NotImplementedException();
         }
-        public virtual long Update(TInputIdentityUpdate inputIdentityUpdate)
+        public long Update(TInputIdentityUpdate inputIdentityUpdate)
         {
             return Update([inputIdentityUpdate]).FirstOrDefault();
         }

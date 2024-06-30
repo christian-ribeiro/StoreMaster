@@ -9,6 +9,8 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
     {
         public EnumStockMovementType StockMovementType { get; private set; }
 
+        public StockMovement() { }
+
         [JsonConstructor]
         public StockMovement(EnumStockMovementType stockMovementType)
         {

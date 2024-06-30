@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using StoreMaster.Infrastructure.Persistence.Context;
-using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 

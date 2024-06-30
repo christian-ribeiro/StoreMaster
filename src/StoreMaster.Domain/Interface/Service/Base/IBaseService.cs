@@ -1,6 +1,6 @@
 ﻿using StoreMaster.Arguments.Arguments.Base;
 
-namespace StoreMaster.Domain.Interface.Service
+namespace StoreMaster.Domain.Interface.Service.Base
 {
     public interface IBaseService<TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete>
         where TOutput : BaseOutput<TOutput>
