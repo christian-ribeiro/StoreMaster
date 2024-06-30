@@ -10,8 +10,4 @@
 	  <ProjectReference Include="..\StoreMaster.Arguments\StoreMaster.Arguments.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Service\" />
-	</ItemGroup>
-
 </Project>

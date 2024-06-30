@@ -1,17 +1,29 @@
 ﻿namespace StoreMaster.Domain.DTO.Base
 {
-    public abstract class BaseInternalPropertiesDTO<TInternalProperties> where TInternalProperties : BaseInternalPropertiesDTO<TInternalProperties>, new()
+    public abstract class BaseInternalPropertiesDTO<TInternalPropertiesDTO> where TInternalPropertiesDTO : BaseInternalPropertiesDTO<TInternalPropertiesDTO>, new()
     {
         public long Id { get; set; }
         public virtual DateTime CreationDate { get; set; }
         public virtual DateTime? ChangeDate { get; set; }
 
-        public TInternalProperties SetInternalData(long id, DateTime creationDate, DateTime? changeDate)
+        public TInternalPropertiesDTO SetInternalData(long id, DateTime creationDate, DateTime? changeDate)
         {
             Id = id;
             CreationDate = creationDate;
             ChangeDate = changeDate;
-            return (TInternalProperties)this;
+            return (TInternalPropertiesDTO)this;
+        }
+
+        public TInternalPropertiesDTO SetCreateData<TEntry>()
+        {
+            CreationDate = DateTime.Now;
+            return (TInternalPropertiesDTO)this;
+        }
+
+        public TInternalPropertiesDTO SetUpdateData<TEntry>()
+        {
+            ChangeDate = DateTime.Now;
+            return (TInternalPropertiesDTO)this;
         }
     }
 }
