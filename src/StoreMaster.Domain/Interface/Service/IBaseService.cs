@@ -20,8 +20,8 @@ namespace StoreMaster.Domain.Interface.Service
         public List<TOutput> GetListByListIdentifier(List<TInputIdentifier> listInputIdentifier);
         long Create(TInputCreate inputCreate);
         List<long> Create(List<TInputCreate> listInputCreate);
-        long Update(TInputUpdate inputUpdate);
-        List<long> UpdateMultiple(List<TInputUpdate> listInputUpdate);
+        long Update(TInputIdentityUpdate inputIdentityUpdate);
+        List<long> UpdateMultiple(List<TInputIdentityUpdate> listInputIdentityUpdate);
         bool Delete(TInputIdentityDelete inputIdentityDelete);
         bool DeleteMultiple(List<TInputIdentityDelete> listInputIdentityDelete);
     }
