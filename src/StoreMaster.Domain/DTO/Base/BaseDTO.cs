@@ -2,13 +2,14 @@
 
 namespace StoreMaster.Domain.DTO.Base
 {
-    public class BaseDTO<TOutput, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TDTO, TInternalPropertiesDTO, TExternalPropertiesDTO, TAuxililiaryPropertiesDTO>
+    public class BaseDTO<TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TDTO, TInternalPropertiesDTO, TExternalPropertiesDTO, TAuxililiaryPropertiesDTO>
         where TOutput : BaseOutput<TOutput>
+        where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
         where TInputCreate : BaseInputCreate<TInputCreate>
         where TInputUpdate : BaseInputUpdate<TInputUpdate>
         where TInputIdentityUpdate : BaseInputIdentityUpdate<TInputUpdate>
         where TInputIdentityDelete : BaseInputIdentityDelete<TInputIdentityDelete>
-        where TDTO : BaseDTO<TOutput, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TDTO, TInternalPropertiesDTO, TExternalPropertiesDTO, TAuxililiaryPropertiesDTO>, new()
+        where TDTO : BaseDTO<TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TDTO, TInternalPropertiesDTO, TExternalPropertiesDTO, TAuxililiaryPropertiesDTO>, new()
         where TInternalPropertiesDTO : BaseInternalPropertiesDTO<TInternalPropertiesDTO>, new()
         where TExternalPropertiesDTO : BaseExternalPropertiesDTO<TExternalPropertiesDTO>, new()
         where TAuxililiaryPropertiesDTO : BaseAuxiliaryPropertiesDTO<TAuxililiaryPropertiesDTO>, new()
@@ -35,10 +36,11 @@ namespace StoreMaster.Domain.DTO.Base
         }
     }
 
-    public class BaseDTO_1<TOutput, TInputCreate, TDTO, TInternalPropertiesDTO, TExternalPropertiesDTO, TAuxililiaryPropertiesDTO> : BaseDTO<TOutput, TInputCreate, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TDTO, TInternalPropertiesDTO, TExternalPropertiesDTO, TAuxililiaryPropertiesDTO>
+    public class BaseDTO_1<TOutput, TInputIdentifier, TInputCreate, TDTO, TInternalPropertiesDTO, TExternalPropertiesDTO, TAuxililiaryPropertiesDTO> : BaseDTO<TOutput, TInputIdentifier, TInputCreate, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TDTO, TInternalPropertiesDTO, TExternalPropertiesDTO, TAuxililiaryPropertiesDTO>
         where TOutput : BaseOutput<TOutput>
+        where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
         where TInputCreate : BaseInputCreate<TInputCreate>
-        where TDTO : BaseDTO_1<TOutput, TInputCreate, TDTO, TInternalPropertiesDTO, TExternalPropertiesDTO, TAuxililiaryPropertiesDTO>, new()
+        where TDTO : BaseDTO_1<TOutput, TInputIdentifier, TInputCreate, TDTO, TInternalPropertiesDTO, TExternalPropertiesDTO, TAuxililiaryPropertiesDTO>, new()
         where TInternalPropertiesDTO : BaseInternalPropertiesDTO<TInternalPropertiesDTO>, new()
         where TExternalPropertiesDTO : BaseExternalPropertiesDTO<TExternalPropertiesDTO>, new()
         where TAuxililiaryPropertiesDTO : BaseAuxiliaryPropertiesDTO<TAuxililiaryPropertiesDTO>, new()

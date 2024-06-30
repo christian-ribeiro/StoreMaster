@@ -3,7 +3,7 @@ using StoreMaster.Domain.DTO.Base;
 
 namespace StoreMaster.Domain.DTO
 {
-    public class StockMovementDTO : BaseDTO_1<OutputStockMovement, InputCreateStockMovement, StockMovementDTO, InternalPropertiesStockMovementDTO, ExternalPropertiesStockMovementDTO, AuxiliaryPropertiesStockMovementDTO>
+    public class StockMovementDTO : BaseDTO_1<OutputStockMovement, InputIdentifierStockMovement, InputCreateStockMovement, StockMovementDTO, InternalPropertiesStockMovementDTO, ExternalPropertiesStockMovementDTO, AuxiliaryPropertiesStockMovementDTO>
     {
 #nullable disable
         public static StockMovementDTO GetDTO(OutputStockMovement output)
