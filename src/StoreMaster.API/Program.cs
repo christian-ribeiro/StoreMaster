@@ -1,25 +1,19 @@
-using Microsoft.EntityFrameworkCore;
-using StoreMaster.Infrastructure.Persistence.Context;
+using StoreMaster.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var connectionString = builder.Configuration["ConnectionStrings:Default"];
-builder.Services.AddDbContext<AppDbContext>(cfg => cfg.UseMySQL(connectionString));
+builder.Services.ConfigureContext(builder.Configuration);
+builder.Services.ConfigureCors();
+builder.Services.ConfigureAuthentication();
+builder.Services.ConfigureSwagger();
+builder.Services.ConfigureController();
+builder.Services.ConfigureDependencyInjection();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseAuthorization();
-
-app.MapControllers();
+app.ApplyCors();
+app.ApplyAuthentication();
+app.ApplySwagger();
+app.ApplyController();
 
 app.Run();
