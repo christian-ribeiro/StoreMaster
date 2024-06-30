@@ -1,4 +1,4 @@
-﻿using StoreMaster.Arguments.Arguments;
+﻿using StoreMaster.Domain.DTO;
 using StoreMaster.Infrastructure.Persistence.Entry.Base;
 using System.Text.Json.Serialization;
 
@@ -25,14 +25,28 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         }
 
 #nullable disable
-        public static implicit operator OutputProductCategory(ProductCategory productCategory)
+        public static ProductCategoryDTO GetDTO(ProductCategory productcategory)
         {
-            return productCategory == null ? default : new OutputProductCategory(productCategory.Code, productCategory.Description, default);
+            return new ProductCategoryDTO().Load(
+                    new InternalPropertiesProductCategoryDTO().SetInternalData(productcategory.Id, productcategory.CreationDate, productcategory.ChangeDate),
+                    new ExternalPropertiesProductCategoryDTO(),
+                    new AuxiliaryPropertiesProductCategoryDTO()
+                );
         }
 
-        public static implicit operator ProductCategory(OutputProductCategory output)
+        public static ProductCategory GetEntry(ProductCategoryDTO dto)
         {
-            return output == null ? default : new ProductCategory(output.Code, output.Description, default).SetInternalData(output.Id, output.CreationDate, output.ChangeDate);
+            return dto == null ? default : new ProductCategory().SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+        }
+
+        public static implicit operator ProductCategoryDTO(ProductCategory productcategory)
+        {
+            return GetDTO(productcategory);
+        }
+
+        public static implicit operator ProductCategory(ProductCategoryDTO dto)
+        {
+            return GetEntry(dto);
         }
 #nullable enable
     }

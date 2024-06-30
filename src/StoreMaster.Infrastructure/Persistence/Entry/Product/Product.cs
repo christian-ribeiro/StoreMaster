@@ -1,4 +1,4 @@
-﻿using StoreMaster.Arguments.Arguments;
+﻿using StoreMaster.Domain.DTO;
 using StoreMaster.Infrastructure.Persistence.Entry.Base;
 using System.Text.Json.Serialization;
 
@@ -19,14 +19,28 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         }
 
 #nullable disable
-        public static implicit operator OutputProduct(Product product)
+        public static ProductDTO GetDTO(Product product)
         {
-            return product == null ? default : new OutputProduct(product.ProductCategoryId, product.ProductCategory).SetInternalData(product.Id, product.CreationDate, product.ChangeDate);
+            return new ProductDTO().Load(
+                    new InternalPropertiesProductDTO().SetInternalData(product.Id, product.CreationDate, product.ChangeDate),
+                    new ExternalPropertiesProductDTO(product.ProductCategoryId),
+                    new AuxiliaryPropertiesProductDTO(product.ProductCategory)
+                );
         }
 
-        public static implicit operator Product(OutputProduct output)
+        public static Product GetEntry(ProductDTO dto)
         {
-            return output == null ? default : new Product(output.ProductCategoryId, output.ProductCategory).SetInternalData(output.Id, output.CreationDate, output.ChangeDate);
+            return dto == null ? default : new Product().SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+        }
+
+        public static implicit operator ProductDTO(Product product)
+        {
+            return GetDTO(product);
+        }
+
+        public static implicit operator Product(ProductDTO dto)
+        {
+            return GetEntry(dto);
         }
 #nullable enable
     }
