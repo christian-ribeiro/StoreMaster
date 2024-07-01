@@ -16,7 +16,7 @@ namespace StoreMaster.Domain.DTO
 
         public static OutputProduct GetOutput(ProductDTO dto)
         {
-            return dto == null ? default : new OutputProduct(dto.ExternalPropertiesDTO.ProductCategoryId, dto.AuxililiaryPropertiesDTO.ProductCategory).SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+            return dto == null ? default : new OutputProduct(dto.ExternalPropertiesDTO.ProductCategoryId, dto.AuxiliaryPropertiesDTO.ProductCategory).SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
 
         public static implicit operator ProductDTO(OutputProduct output)

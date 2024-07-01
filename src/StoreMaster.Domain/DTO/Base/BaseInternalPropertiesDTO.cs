@@ -14,13 +14,13 @@
             return (TInternalPropertiesDTO)this;
         }
 
-        public TInternalPropertiesDTO SetCreateData<TEntry>()
+        public TInternalPropertiesDTO SetCreateData()
         {
             CreationDate = DateTime.Now;
             return (TInternalPropertiesDTO)this;
         }
 
-        public TInternalPropertiesDTO SetUpdateData<TEntry>()
+        public TInternalPropertiesDTO SetUpdateData()
         {
             ChangeDate = DateTime.Now;
             return (TInternalPropertiesDTO)this;

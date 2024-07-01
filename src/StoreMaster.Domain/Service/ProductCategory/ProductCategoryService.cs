@@ -8,19 +8,22 @@ namespace StoreMaster.Domain.Service
 {
     public class ProductCategoryService(IProductCategoryRepository repository) : BaseService<IProductCategoryRepository, OutputProductCategory, InputIdentifierProductCategory, InputCreateProductCategory, InputUpdateProductCategory, InputIdentityUpdateProductCategory, InputIdentityDeleteProductCategory, ProductCategoryDTO, InternalPropertiesProductCategoryDTO, ExternalPropertiesProductCategoryDTO, AuxiliaryPropertiesProductCategoryDTO>(repository), IProductCategoryService
     {
-        public override List<long> Create(List<InputCreateProductCategory> listInputCreate)
+        public override List<long> Create(List<InputCreateProductCategory> listInputCreateProductCategory)
         {
-            return base.Create(listInputCreate);
+            var listCreate = (from i in listInputCreateProductCategory select new ProductCategoryDTO().Create(i)).ToList();
+            return _repository.Create(listCreate);
         }
 
-        public override List<long> Update(List<InputIdentityUpdateProductCategory> listInputIdentityUpdate)
+        public override List<long> Update(List<InputIdentityUpdateProductCategory> listInputIdentityUpdateProductCategory)
         {
-            return base.Update(listInputIdentityUpdate);
+            var listUpdate = (from i in listInputIdentityUpdateProductCategory select new ProductCategoryDTO().Update(i.InputUpdate)).ToList();
+            return _repository.Update(listUpdate);
         }
 
-        public override bool Delete(List<InputIdentityDeleteProductCategory> listInputIdentityDelete)
+        public override bool Delete(List<InputIdentityDeleteProductCategory> listInputIdentityDeleteProductCategory)
         {
-            return base.Delete(listInputIdentityDelete);
+            var listOriginalProductCategoryDTO = _repository.GetListByListId((from i in listInputIdentityDeleteProductCategory select i.Id).ToList());
+            return _repository.Delete(listOriginalProductCategoryDTO);
         }
     }
 }

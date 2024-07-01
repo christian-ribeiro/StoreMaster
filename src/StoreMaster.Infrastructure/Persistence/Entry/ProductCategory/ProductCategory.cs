@@ -25,18 +25,18 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         }
 
 #nullable disable
-        public static ProductCategoryDTO GetDTO(ProductCategory productcategory)
+        public static ProductCategoryDTO GetDTO(ProductCategory productCategory)
         {
             return new ProductCategoryDTO().Load(
-                    new InternalPropertiesProductCategoryDTO().SetInternalData(productcategory.Id, productcategory.CreationDate, productcategory.ChangeDate),
-                    new ExternalPropertiesProductCategoryDTO(),
+                    new InternalPropertiesProductCategoryDTO().SetInternalData(productCategory.Id, productCategory.CreationDate, productCategory.ChangeDate),
+                    new ExternalPropertiesProductCategoryDTO(productCategory.Code, productCategory.Description),
                     new AuxiliaryPropertiesProductCategoryDTO()
                 );
         }
 
         public static ProductCategory GetEntry(ProductCategoryDTO dto)
         {
-            return dto == null ? default : new ProductCategory().SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+            return dto == null ? default : new ProductCategory(dto.ExternalPropertiesDTO.Code, dto.ExternalPropertiesDTO.Description, default).SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
 
         public static implicit operator ProductCategoryDTO(ProductCategory productcategory)
