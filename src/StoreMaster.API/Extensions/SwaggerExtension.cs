@@ -46,6 +46,8 @@ namespace StoreMaster.API.Extensions
                     return [actionDescriptor.ControllerName];
                 });
             });
+
+            services.AddSwaggerGenNewtonsoftSupport();
             return services;
         }
 

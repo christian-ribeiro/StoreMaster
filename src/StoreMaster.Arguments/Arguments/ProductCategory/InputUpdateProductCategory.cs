@@ -4,7 +4,7 @@ namespace StoreMaster.Arguments.Arguments
 {
     public class InputUpdateProductCategory : BaseInputUpdate<InputUpdateProductCategory>
     {
-         public string Code { get; private set; }
+        public string Code { get; private set; }
         public string Description { get; private set; }
 
         public InputUpdateProductCategory() { }
