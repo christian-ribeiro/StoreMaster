@@ -30,7 +30,7 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
 
         public static Product GetEntry(ProductDTO dto)
         {
-            return dto == null ? default : new Product().SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+            return dto == null ? default : new Product(dto.ExternalPropertiesDTO.ProductCategoryId, dto.AuxiliaryPropertiesDTO.ProductCategory).SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
 
         public static implicit operator ProductDTO(Product product)
