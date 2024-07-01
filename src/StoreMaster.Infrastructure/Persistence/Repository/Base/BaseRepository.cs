@@ -2,6 +2,7 @@
 using StoreMaster.Arguments.Arguments.Base;
 using StoreMaster.Domain.DTO.Base;
 using StoreMaster.Domain.Interface.Repository.Base;
+using StoreMaster.Infrastructure.Extension;
 using StoreMaster.Infrastructure.Persistence.Context;
 using StoreMaster.Infrastructure.Persistence.Entry.Base;
 using System.Linq.Expressions;
@@ -55,17 +56,18 @@ namespace StoreMaster.Infrastructure.Persistence.Repository
 
         public TDTO Get(long id)
         {
-            return FromEntryToDTO(_dbSet.AsNoTracking().Where(x => x.Id == id).FirstOrDefault());
+            var query = _dbSet.AsNoTracking().Where(x => x.Id == id).IncludeVirtualProperties().FirstOrDefault();
+            return FromEntryToDTO(query);
         }
 
         public List<TDTO> GetAll()
         {
-            return FromEntryToDTO(_dbSet.AsNoTracking().ToList());
+            return FromEntryToDTO(_dbSet.AsNoTracking().IncludeVirtualProperties().ToList());
         }
 
         public List<TDTO> GetListByListId(List<long> listId)
         {
-            return FromEntryToDTO(_dbSet.Where(x => listId.Contains(x.Id)).AsNoTracking().ToList());
+            return FromEntryToDTO(_dbSet.Where(x => listId.Contains(x.Id)).IncludeVirtualProperties().AsNoTracking().ToList());
         }
 
         public TDTO GetByIdentifier(TInputIdentifier inputIdentifier)
@@ -109,7 +111,7 @@ namespace StoreMaster.Infrastructure.Persistence.Repository
                 combinedExpression = combinedExpression == null ? individualExpression : CombineExpressions(combinedExpression, individualExpression, Expression.OrElse);
             }
 
-            query = query.Where(combinedExpression);
+            query = query.Where(combinedExpression).IncludeVirtualProperties();
 
             return FromEntryToDTO(query.ToList());
         }
@@ -176,6 +178,8 @@ namespace StoreMaster.Infrastructure.Persistence.Repository
         {
             return (from i in listEntry select (TDTO)(dynamic)i).ToList();
         }
+
+
     }
 
     public abstract class BaseRepository_1<TEntry, TOutput, TInputIdentifier, TInputCreate, TDTO, TInternalPropertiesDTO, TExternalPropertiesDTO, TAuxiliaryPropertiesDTO>(AppDbContext context) : BaseRepository<TEntry, TOutput, TInputIdentifier, TInputCreate, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TDTO, TInternalPropertiesDTO, TExternalPropertiesDTO, TAuxiliaryPropertiesDTO>(context), IBaseRepository_1<TOutput, TInputIdentifier, TInputCreate, TDTO, TInternalPropertiesDTO, TExternalPropertiesDTO, TAuxiliaryPropertiesDTO>

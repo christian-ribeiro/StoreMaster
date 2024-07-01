@@ -10,10 +10,10 @@ namespace StoreMaster.Domain.Service
     {
         private readonly IProductCategoryRepository _productCategoryRepository = productCategoryRepository;
 
-        public override List<long> Create(List<InputCreateProduct> listInputCreate)
+        public override List<long> Create(List<InputCreateProduct> listInputCreateProduct)
         {
-            var listRelatedProductCategory = _productCategoryRepository.GetListByListId((from i in listInputCreate select i.ProductCategoryId).ToList());
-            var listCreate = (from i in listInputCreate
+            var listRelatedProductCategory = _productCategoryRepository.GetListByListId((from i in listInputCreateProduct select i.ProductCategoryId).ToList());
+            var listCreate = (from i in listInputCreateProduct
                               let relatedProductCategory = (from j in listRelatedProductCategory where j.InternalPropertiesDTO.Id == i.ProductCategoryId select j).FirstOrDefault()
                               let dto = new ProductDTO().Create(i)
                               where relatedProductCategory != null
@@ -22,14 +22,22 @@ namespace StoreMaster.Domain.Service
             return _repository.Create(listCreate);
         }
 
-        public override List<long> Update(List<InputIdentityUpdateProduct> listInputIdentityUpdate)
+        public override List<long> Update(List<InputIdentityUpdateProduct> listInputIdentityUpdateProduct)
         {
-            return base.Update(listInputIdentityUpdate);
+            var listRelatedProductCategory = _productCategoryRepository.GetListByListId((from i in listInputIdentityUpdateProduct select i.InputUpdate.ProductCategoryId).ToList());
+            var listUpdate = (from i in listInputIdentityUpdateProduct
+                              let relatedProductCategory = (from j in listRelatedProductCategory where j.InternalPropertiesDTO.Id == i.InputUpdate.ProductCategoryId select j).FirstOrDefault()
+                              let dto = new ProductDTO().Update(i.InputUpdate, new InternalPropertiesProductDTO().SetInternalData(i.Id, default, default))
+                              where relatedProductCategory != null
+                              select dto).ToList();
+
+            return _repository.Update(listUpdate);
         }
 
-        public override bool Delete(List<InputIdentityDeleteProduct> listInputIdentityDelete)
+        public override bool Delete(List<InputIdentityDeleteProduct> listInputIdentityDeleteProduct)
         {
-            return base.Delete(listInputIdentityDelete);
+            List<ProductDTO> listOriginalProductDTO = _repository.GetListByListId((from i in listInputIdentityDeleteProduct select i.Id).ToList());
+            return _repository.Delete(listOriginalProductDTO);
         }
     }
 }
