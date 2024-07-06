@@ -15,6 +15,7 @@ namespace StoreMaster.API.Extensions
             services.AddScoped<IStockConfigurationRepository, StockConfigurationRepository>();
             services.AddScoped<IStockMovementRepository, StockMovementRepository>();
             services.AddScoped<IStockMovementTypeRepository, StockMovementTypeRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             #endregion
 
             #region Service
@@ -23,6 +24,7 @@ namespace StoreMaster.API.Extensions
             services.AddScoped<IStockConfigurationService, StockConfigurationService>();
             services.AddScoped<IStockMovementService, StockMovementService>();
             services.AddScoped<IStockMovementTypeService, StockMovementTypeService>();
+            services.AddScoped<IUserService, UserService>();
             #endregion
             return services;
         }

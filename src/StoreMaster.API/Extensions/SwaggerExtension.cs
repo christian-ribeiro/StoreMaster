@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
@@ -13,27 +14,39 @@ namespace StoreMaster.API.Extensions
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "StoreMaster API", Version = "v1" });
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+
+                var securityScheme = new OpenApiSecurityScheme
                 {
-                    Description = "JWT Authorization header using the Bearer scheme",
-                    Type = SecuritySchemeType.Http,
-                    Scheme = "bearer"
-                });
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.OAuth2,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Flows = new OpenApiOAuthFlows
+                    {
+                        AuthorizationCode = new OpenApiOAuthFlow
+                        {
+                            AuthorizationUrl = new Uri("https://accounts.google.com/o/oauth2/v2/auth"),
+                            TokenUrl = new Uri("https://oauth2.googleapis.com/token"),
+                            Scopes = new Dictionary<string, string>
+                            {
+                                { "openid", "OpenID Connect" },
+                                { "email", "Access email" },
+                                { "profile", "Access profile" }
+                            }
+                        }
+                    }
+                };
+
+                c.AddSecurityDefinition("oauth2", securityScheme);
 
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
                 {
-                    new OpenApiSecurityScheme
                     {
-                        Reference = new OpenApiReference
-                        {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
-                        }
-                    },
-                    []
-                }
-            });
+                        securityScheme,
+                        new[] { "openid", "email", "profile" }
+                    }
+                });
 
                 c.CustomOperationIds(apiDescription =>
                 {
@@ -51,8 +64,10 @@ namespace StoreMaster.API.Extensions
             return services;
         }
 
-        public static WebApplication ApplySwagger(this WebApplication app)
+        public static WebApplication ApplySwagger(this WebApplication app, IConfiguration configuration)
         {
+            var googleAuthNSection = configuration.GetSection("Authentication:Google");
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -61,6 +76,10 @@ namespace StoreMaster.API.Extensions
                 c.EnableFilter();
                 c.DocExpansion(DocExpansion.None);
                 c.DisplayRequestDuration();
+                c.OAuthClientId(googleAuthNSection["ClientId"]);
+                c.OAuthClientSecret(googleAuthNSection["ClientSecret"]);
+                c.OAuthAppName("Store Master");
+                c.OAuthUsePkce();
             });
             return app;
         }
