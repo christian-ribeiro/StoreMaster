@@ -12,9 +12,10 @@ namespace StoreMaster.Domain.Service
 
         public override List<long> Create(List<InputCreateProduct> listInputCreateProduct)
         {
-            var listRelatedProductCategory = _productCategoryRepository.GetListByListId((from i in listInputCreateProduct select i.ProductCategoryId).ToList());
+            var listRelatedProductCategoryDTO = _productCategoryRepository.GetListByListId((from i in listInputCreateProduct select i.ProductCategoryId).ToList());
+
             var listCreate = (from i in listInputCreateProduct
-                              let relatedProductCategory = (from j in listRelatedProductCategory where j.InternalPropertiesDTO.Id == i.ProductCategoryId select j).FirstOrDefault()
+                              let relatedProductCategory = (from j in listRelatedProductCategoryDTO where j.InternalPropertiesDTO.Id == i.ProductCategoryId select j).FirstOrDefault()
                               let dto = new ProductDTO().Create(i)
                               where relatedProductCategory != null
                               select dto).ToList();
@@ -24,10 +25,14 @@ namespace StoreMaster.Domain.Service
 
         public override List<long> Update(List<InputIdentityUpdateProduct> listInputIdentityUpdateProduct)
         {
-            var listRelatedProductCategory = _productCategoryRepository.GetListByListId((from i in listInputIdentityUpdateProduct select i.InputUpdate.ProductCategoryId).ToList());
+            var listOriginalProductDTO = _repository.GetListByListId((from i in listInputIdentityUpdateProduct select i.Id).ToList());
+            var listRelatedProductCategoryDTO = _productCategoryRepository.GetListByListId((from i in listInputIdentityUpdateProduct select i.InputUpdate.ProductCategoryId).ToList());
+
             var listUpdate = (from i in listInputIdentityUpdateProduct
-                              let relatedProductCategory = (from j in listRelatedProductCategory where j.InternalPropertiesDTO.Id == i.InputUpdate.ProductCategoryId select j).FirstOrDefault()
-                              let dto = new ProductDTO().Update(i.InputUpdate, new InternalPropertiesProductDTO().SetInternalData(i.Id, default, default))
+                              let originalProduct = (from j in listOriginalProductDTO where j.InternalPropertiesDTO.Id == i.Id select j).FirstOrDefault()
+                              let relatedProductCategory = (from j in listRelatedProductCategoryDTO where j.InternalPropertiesDTO.Id == i.InputUpdate.ProductCategoryId select j).FirstOrDefault()
+                              where originalProduct != null && relatedProductCategory != null
+                              let dto = new ProductDTO().Update(i.InputUpdate, originalProduct.InternalPropertiesDTO)
                               where relatedProductCategory != null
                               select dto).ToList();
 

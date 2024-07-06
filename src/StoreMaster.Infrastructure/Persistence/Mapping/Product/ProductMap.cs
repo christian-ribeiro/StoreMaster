@@ -18,6 +18,10 @@ namespace StoreMaster.Infrastructure.Persistence.Mapping
 
             builder.Property(x => x.ChangeDate).HasColumnName("data_alteracao");
 
+            builder.Property(x => x.Description).HasColumnName("descricao");
+            builder.Property(x => x.Description).HasMaxLength(100);
+            builder.Property(x => x.Description).IsRequired();
+
             builder.Property(x => x.ProductCategoryId).HasColumnName("id_categoria_produto");
         }
     }

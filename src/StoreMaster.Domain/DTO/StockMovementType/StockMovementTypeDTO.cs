@@ -1,5 +1,6 @@
 ﻿using StoreMaster.Arguments.Arguments;
 using StoreMaster.Domain.DTO.Base;
+using StoreMaster.Domain.Extensions;
 
 namespace StoreMaster.Domain.DTO
 {
@@ -11,12 +12,12 @@ namespace StoreMaster.Domain.DTO
             return output == null ? default : new StockMovementTypeDTO().Load(
                 new InternalPropertiesStockMovementTypeDTO(output.Code, output.Description).SetInternalData(output.Id, output.CreationDate, output.ChangeDate),
                 default,
-                new AuxiliaryPropertiesStockMovementTypeDTO((from i in output.ListOutputStockMovement select (StockMovementDTO)i).ToList()));
+                new AuxiliaryPropertiesStockMovementTypeDTO(output.ListOutputStockMovement.ConvertAll<StockMovementDTO>()));
         }
 
         public static OutputStockMovementType GetOutput(StockMovementTypeDTO dto)
         {
-            return dto == null ? default : new OutputStockMovementType(dto.InternalPropertiesDTO.Code, dto.InternalPropertiesDTO.Description, (from i in dto.AuxiliaryPropertiesDTO.ListStockMovement select (OutputStockMovement)i).ToList())
+            return dto == null ? default : new OutputStockMovementType(dto.InternalPropertiesDTO.Code, dto.InternalPropertiesDTO.Description, dto.AuxiliaryPropertiesDTO.ListStockMovement.ConvertAll<OutputStockMovement>())
                 .SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
 

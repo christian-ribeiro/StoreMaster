@@ -10,13 +10,13 @@ namespace StoreMaster.Domain.DTO
         {
             return output == null ? default : new StockConfigurationDTO().Load(
                 new InternalPropertiesStockConfigurationDTO().SetInternalData(output.Id, output.CreationDate, output.ChangeDate),
-                new ExternalPropertiesStockConfigurationDTO(),
+                new ExternalPropertiesStockConfigurationDTO(output.MinimumStockAmount, output.ProductId),
                 new AuxiliaryPropertiesStockConfigurationDTO());
         }
 
         public static OutputStockConfiguration GetOutput(StockConfigurationDTO dto)
         {
-            return dto == null ? default : new OutputStockConfiguration().SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+            return dto == null ? default : new OutputStockConfiguration(dto.ExternalPropertiesDTO.MinimumStockAmount, dto.ExternalPropertiesDTO.ProductId, dto.AuxiliaryPropertiesDTO.Product).SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
 
         public static implicit operator StockConfigurationDTO(OutputStockConfiguration output)

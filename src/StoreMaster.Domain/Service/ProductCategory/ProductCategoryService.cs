@@ -16,7 +16,13 @@ namespace StoreMaster.Domain.Service
 
         public override List<long> Update(List<InputIdentityUpdateProductCategory> listInputIdentityUpdateProductCategory)
         {
-            var listUpdate = (from i in listInputIdentityUpdateProductCategory select new ProductCategoryDTO().Update(i.InputUpdate, new InternalPropertiesProductCategoryDTO().SetInternalData(i.Id, default, default))).ToList();
+            var listOriginalProductCategory = _repository.GetListByListId((from i in listInputIdentityUpdateProductCategory select i.Id).ToList());
+
+            var listUpdate = (from i in listInputIdentityUpdateProductCategory
+                              let originalProductCategory = (from j in listOriginalProductCategory where j.InternalPropertiesDTO.Id == i.Id select j).FirstOrDefault()
+                              where originalProductCategory != null
+                              select new ProductCategoryDTO().Update(i.InputUpdate, originalProductCategory.InternalPropertiesDTO)).ToList();
+
             return _repository.Update(listUpdate);
         }
 

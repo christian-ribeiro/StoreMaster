@@ -25,7 +25,7 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
 #nullable disable
         public static ProductCategoryDTO GetDTO(ProductCategory productCategory)
         {
-            return new ProductCategoryDTO().Load(
+            return productCategory == null ? default : new ProductCategoryDTO().Load(
                     new InternalPropertiesProductCategoryDTO().SetInternalData(productCategory.Id, productCategory.CreationDate, productCategory.ChangeDate),
                     new ExternalPropertiesProductCategoryDTO(productCategory.Code, productCategory.Description),
                     new AuxiliaryPropertiesProductCategoryDTO()

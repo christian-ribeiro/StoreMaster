@@ -8,6 +8,8 @@ namespace StoreMaster.Infrastructure.Persistence.Mapping
     {
         public void Configure(EntityTypeBuilder<StockConfiguration> builder)
         {
+            builder.HasOne(x => x.Product).WithOne(x => x.StockConfiguration).HasForeignKey<StockConfiguration>(x => x.ProductId).OnDelete(DeleteBehavior.Cascade);
+
             builder.ToTable("configuracao_estoque");
 
             builder.HasKey(x => x.Id).HasName("id");
@@ -17,6 +19,9 @@ namespace StoreMaster.Infrastructure.Persistence.Mapping
             builder.Property(x => x.ChangeDate).HasColumnName("data_alteracao");
 
             builder.Property(x => x.MinimumStockAmount).HasColumnName("quantidade_minima_estoque");
+
+            builder.Property(x => x.ProductId).HasColumnName("id_produto");
+            builder.Property(x => x.ProductId).IsRequired();
         }
     }
 }

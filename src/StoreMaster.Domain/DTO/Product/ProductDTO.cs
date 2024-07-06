@@ -1,5 +1,6 @@
 ﻿using StoreMaster.Arguments.Arguments;
 using StoreMaster.Domain.DTO.Base;
+using StoreMaster.Domain.Extensions;
 
 namespace StoreMaster.Domain.DTO
 {
@@ -10,13 +11,13 @@ namespace StoreMaster.Domain.DTO
         {
             return output == null ? default : new ProductDTO().Load(
                 new InternalPropertiesProductDTO().SetInternalData(output.Id, output.CreationDate, output.ChangeDate),
-                new ExternalPropertiesProductDTO(output.ProductCategoryId),
-                new AuxiliaryPropertiesProductDTO(output.ProductCategory));
+                new ExternalPropertiesProductDTO(output.Description, output.ProductCategoryId),
+                new AuxiliaryPropertiesProductDTO(output.ProductCategory, output.StockConfiguration, output.ListStockMovement.ConvertAll<StockMovementDTO>()));
         }
 
         public static OutputProduct GetOutput(ProductDTO dto)
         {
-            return dto == null ? default : new OutputProduct(dto.ExternalPropertiesDTO.ProductCategoryId, dto.AuxiliaryPropertiesDTO.ProductCategory).SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+            return dto == null ? default : new OutputProduct(dto.ExternalPropertiesDTO.Description, dto.ExternalPropertiesDTO.ProductCategoryId, dto.AuxiliaryPropertiesDTO.ProductCategory, dto.AuxiliaryPropertiesDTO.StockConfiguration, dto.AuxiliaryPropertiesDTO.ListStockMovement.ConvertAll<OutputStockMovement>()).SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
 
         public static implicit operator ProductDTO(OutputProduct output)

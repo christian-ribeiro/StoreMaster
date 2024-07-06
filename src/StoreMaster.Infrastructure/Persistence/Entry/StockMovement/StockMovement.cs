@@ -5,18 +5,21 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
 {
     public class StockMovement : BaseEntry<StockMovement>
     {
+        public long ProductId { get; private set; }
         public long StockMovementTypeId { get; private set; }
 
         #region Virtual Properties
         #region Internal
+        public virtual Product Product { get; private set; }
         public virtual StockMovementType StockMovementType { get; private set; }
         #endregion
         #endregion
 
         public StockMovement() { }
 
-        public StockMovement(long stockMovementTypeId, StockMovementType stockMovementType)
+        public StockMovement(long productId, long stockMovementTypeId, StockMovementType stockMovementType)
         {
+            ProductId = productId;
             StockMovementTypeId = stockMovementTypeId;
             StockMovementType = stockMovementType;
         }
@@ -24,16 +27,16 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
 #nullable disable
         public static StockMovementDTO GetDTO(StockMovement stockMovement)
         {
-            return new StockMovementDTO().Load(
-                    new InternalPropertiesStockMovementDTO(stockMovement.StockMovementTypeId).SetInternalData(stockMovement.Id, stockMovement.CreationDate, stockMovement.ChangeDate),
-                    new ExternalPropertiesStockMovementDTO(),
-                    new AuxiliaryPropertiesStockMovementDTO(stockMovement.StockMovementType)
+            return stockMovement == null ? default : new StockMovementDTO().Load(
+                    new InternalPropertiesStockMovementDTO().SetInternalData(stockMovement.Id, stockMovement.CreationDate, stockMovement.ChangeDate),
+                    new ExternalPropertiesStockMovementDTO(stockMovement.ProductId, stockMovement.StockMovementTypeId),
+                    new AuxiliaryPropertiesStockMovementDTO(stockMovement.Product, stockMovement.StockMovementType)
                 );
         }
 
         public static StockMovement GetEntry(StockMovementDTO dto)
         {
-            return dto == null ? default : new StockMovement(dto.InternalPropertiesDTO.StockMovementTypeId, dto.AuxiliaryPropertiesDTO.StockMovementType).SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+            return dto == null ? default : new StockMovement(dto.ExternalPropertiesDTO.ProductId, dto.ExternalPropertiesDTO.StockMovementTypeId, dto.AuxiliaryPropertiesDTO.StockMovementType).SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
 
         public static implicit operator StockMovementDTO(StockMovement stockmovement)

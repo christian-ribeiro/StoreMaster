@@ -60,6 +60,7 @@ namespace StoreMaster.API.Extensions
                 c.DocumentTitle = "StoreMaster API Documentation";
                 c.EnableFilter();
                 c.DocExpansion(DocExpansion.None);
+                c.DisplayRequestDuration();
             });
             return app;
         }
