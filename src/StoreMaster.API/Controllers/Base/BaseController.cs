@@ -210,4 +210,46 @@ namespace StoreMaster.API.Controllers.Base
             throw new NotImplementedException();
         }
     }
+
+    public class BaseController_2<TService, TOutput, TInputIdentifier>(TService service) : BaseController<TService, TOutput, TInputIdentifier, BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0>(service)
+    where TService : IBaseService_2<TOutput, TInputIdentifier>
+    where TOutput : BaseOutput<TOutput>
+    where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
+    {
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override Task<ActionResult<BaseResponseApi<long>>> Create(BaseInputCreate_0 inputCreate)
+        {
+            throw new NotImplementedException();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override Task<ActionResult<BaseResponseApi<List<long>>>> Create(List<BaseInputCreate_0> listInputCreate)
+        {
+            throw new NotImplementedException();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override Task<ActionResult<BaseResponseApi<long>>> Update(BaseInputIdentityUpdate_0 inputIdentityUpdate)
+        {
+            throw new NotImplementedException();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override Task<ActionResult<BaseResponseApi<List<long>>>> Update(List<BaseInputIdentityUpdate_0> listInputIdentityUpdate)
+        {
+            throw new NotImplementedException();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override Task<ActionResult<BaseResponseApi<bool>>> Delete(BaseInputIdentityDelete_0 inputIdentityDelete)
+        {
+            throw new NotImplementedException();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override Task<ActionResult<BaseResponseApi<bool>>> Delete(List<BaseInputIdentityDelete_0> listInputIdentityDelete)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

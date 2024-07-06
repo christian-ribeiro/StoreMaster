@@ -23,10 +23,18 @@ namespace StoreMaster.Domain.Interface.Service.Base
         bool Delete(List<TInputIdentityDelete> listInputIdentityDelete);
     }
 
+    #region TInputUpdate TInputIdentityUpdate TInputIdentityDelete
     public interface IBaseService_1<TOutput, TInputIdentifier, TInputCreate> : IBaseService<TOutput, TInputIdentifier, TInputCreate, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0>
     where TOutput : BaseOutput<TOutput>
     where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
     where TInputCreate : BaseInputCreate<TInputCreate>
-    {
-    }
+    { }
+    #endregion
+
+    #region TInputCreate TInputUpdate TInputIdentityUpdate TInputIdentityDelete
+    public interface IBaseService_2<TOutput, TInputIdentifier> : IBaseService<TOutput, TInputIdentifier, BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0>
+    where TOutput : BaseOutput<TOutput>
+    where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
+    { }
+    #endregion
 }

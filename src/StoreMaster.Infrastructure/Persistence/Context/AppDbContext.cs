@@ -10,6 +10,7 @@ namespace StoreMaster.Infrastructure.Persistence.Context
         public DbSet<StockConfiguration> StockConfiguration { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<StockMovement> StockMovement { get; set; }
+        public DbSet<StockMovementType> StockMovementType { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

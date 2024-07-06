@@ -1,6 +1,5 @@
 ﻿using StoreMaster.Domain.DTO;
 using StoreMaster.Infrastructure.Persistence.Entry.Base;
-using System.Text.Json.Serialization;
 
 namespace StoreMaster.Infrastructure.Persistence.Entry
 {
@@ -16,7 +15,6 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         #endregion
         public ProductCategory() { }
 
-        [JsonConstructor]
         public ProductCategory(string code, string description, List<Product> listProduct)
         {
             Code = code;

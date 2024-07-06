@@ -84,7 +84,7 @@ namespace StoreMaster.Domain.Service.Base
             return (from i in listDTO select (TOutput)(dynamic)i).ToList();
         }
     }
-
+    #region TInputUpdate TInputIdentityUpdate TInputIdentityDelete
     public class BaseService_1<TRepository, TOutput, TInputIdentifier, TInputCreate, TDTO, TInternalPropertiesDTO, TExternalPropertiesDTO, TAuxiliaryPropertiesDTO>(TRepository repository) : BaseService<TRepository, TOutput, TInputIdentifier, TInputCreate, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TDTO, TInternalPropertiesDTO, TExternalPropertiesDTO, TAuxiliaryPropertiesDTO>(repository), IBaseService_1<TOutput, TInputIdentifier, TInputCreate>
         where TRepository : IBaseRepository_1<TOutput, TInputIdentifier, TInputCreate, TDTO, TInternalPropertiesDTO, TExternalPropertiesDTO, TAuxiliaryPropertiesDTO>
         where TOutput : BaseOutput<TOutput>
@@ -94,6 +94,17 @@ namespace StoreMaster.Domain.Service.Base
         where TInternalPropertiesDTO : BaseInternalPropertiesDTO<TInternalPropertiesDTO>, new()
         where TExternalPropertiesDTO : BaseExternalPropertiesDTO<TExternalPropertiesDTO>, new()
         where TAuxiliaryPropertiesDTO : BaseAuxiliaryPropertiesDTO<TAuxiliaryPropertiesDTO>, new()
-    {
-    }
+    { }
+    #endregion
+
+    #region TInputCreate TInputUpdate TInputIdentityUpdate TInputIdentityDelete TExternalPropertiesDTO
+    public class BaseService_2<TRepository, TOutput, TInputIdentifier, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>(TRepository repository) : BaseService<TRepository, TOutput, TInputIdentifier, BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TDTO, TInternalPropertiesDTO, BaseExternalPropertiesDTO_0, TAuxiliaryPropertiesDTO>(repository), IBaseService_2<TOutput, TInputIdentifier>
+        where TRepository : IBaseRepository_2<TOutput, TInputIdentifier, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>
+        where TOutput : BaseOutput<TOutput>
+        where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
+        where TDTO : BaseDTO_2<TOutput, TInputIdentifier, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>, new()
+        where TInternalPropertiesDTO : BaseInternalPropertiesDTO<TInternalPropertiesDTO>, new()
+        where TAuxiliaryPropertiesDTO : BaseAuxiliaryPropertiesDTO<TAuxiliaryPropertiesDTO>, new()
+    { }
+    #endregion
 }

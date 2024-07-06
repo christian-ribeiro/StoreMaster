@@ -9,14 +9,14 @@ namespace StoreMaster.Domain.DTO
         public static StockMovementDTO GetDTO(OutputStockMovement output)
         {
             return output == null ? default : new StockMovementDTO().Load(
-                new InternalPropertiesStockMovementDTO(output.StockMovementType).SetInternalData(output.Id, output.CreationDate, output.ChangeDate),
+                new InternalPropertiesStockMovementDTO(output.StockMovementTypeId).SetInternalData(output.Id, output.CreationDate, output.ChangeDate),
                 new ExternalPropertiesStockMovementDTO(),
-                new AuxiliaryPropertiesStockMovementDTO());
+                new AuxiliaryPropertiesStockMovementDTO(output.StockMovementType));
         }
 
         public static OutputStockMovement GetOutput(StockMovementDTO dto)
         {
-            return dto == null ? default : new OutputStockMovement(dto.InternalPropertiesDTO.StockMovementType).SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+            return dto == null ? default : new OutputStockMovement(dto.InternalPropertiesDTO.StockMovementTypeId, dto.AuxiliaryPropertiesDTO.StockMovementType).SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
 
         public static implicit operator StockMovementDTO(OutputStockMovement output)

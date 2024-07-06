@@ -14,6 +14,7 @@ namespace StoreMaster.API.Extensions
             services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
             services.AddScoped<IStockConfigurationRepository, StockConfigurationRepository>();
             services.AddScoped<IStockMovementRepository, StockMovementRepository>();
+            services.AddScoped<IStockMovementTypeRepository, StockMovementTypeRepository>();
             #endregion
 
             #region Service
@@ -21,6 +22,7 @@ namespace StoreMaster.API.Extensions
             services.AddScoped<IProductCategoryService, ProductCategoryService>();
             services.AddScoped<IStockConfigurationService, StockConfigurationService>();
             services.AddScoped<IStockMovementService, StockMovementService>();
+            services.AddScoped<IStockMovementTypeService, StockMovementTypeService>();
             #endregion
             return services;
         }

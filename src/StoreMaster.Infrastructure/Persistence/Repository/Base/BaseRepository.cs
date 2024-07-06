@@ -178,10 +178,8 @@ namespace StoreMaster.Infrastructure.Persistence.Repository
         {
             return (from i in listEntry select (TDTO)(dynamic)i).ToList();
         }
-
-
     }
-
+    #region TInputUpdate TInputIdentityUpdate TInputIdentityDelete
     public abstract class BaseRepository_1<TEntry, TOutput, TInputIdentifier, TInputCreate, TDTO, TInternalPropertiesDTO, TExternalPropertiesDTO, TAuxiliaryPropertiesDTO>(AppDbContext context) : BaseRepository<TEntry, TOutput, TInputIdentifier, TInputCreate, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TDTO, TInternalPropertiesDTO, TExternalPropertiesDTO, TAuxiliaryPropertiesDTO>(context), IBaseRepository_1<TOutput, TInputIdentifier, TInputCreate, TDTO, TInternalPropertiesDTO, TExternalPropertiesDTO, TAuxiliaryPropertiesDTO>
     where TEntry : BaseEntry<TEntry>, new()
     where TOutput : BaseOutput<TOutput>
@@ -191,6 +189,17 @@ namespace StoreMaster.Infrastructure.Persistence.Repository
     where TInternalPropertiesDTO : BaseInternalPropertiesDTO<TInternalPropertiesDTO>, new()
     where TExternalPropertiesDTO : BaseExternalPropertiesDTO<TExternalPropertiesDTO>, new()
     where TAuxiliaryPropertiesDTO : BaseAuxiliaryPropertiesDTO<TAuxiliaryPropertiesDTO>, new()
-
     { }
+    #endregion
+
+    #region TInputCreate TInputUpdate TInputIdentityUpdate TInputIdentityDelete TExternalPropertiesDTO
+    public abstract class BaseRepository_2<TEntry, TOutput, TInputIdentifier, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>(AppDbContext context) : BaseRepository<TEntry, TOutput, TInputIdentifier, BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TDTO, TInternalPropertiesDTO, BaseExternalPropertiesDTO_0, TAuxiliaryPropertiesDTO>(context), IBaseRepository_2<TOutput, TInputIdentifier, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>
+    where TEntry : BaseEntry<TEntry>, new()
+    where TOutput : BaseOutput<TOutput>
+    where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
+    where TDTO : BaseDTO_2<TOutput, TInputIdentifier, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>, new()
+    where TInternalPropertiesDTO : BaseInternalPropertiesDTO<TInternalPropertiesDTO>, new()
+    where TAuxiliaryPropertiesDTO : BaseAuxiliaryPropertiesDTO<TAuxiliaryPropertiesDTO>, new()
+    { }
+    #endregion
 }

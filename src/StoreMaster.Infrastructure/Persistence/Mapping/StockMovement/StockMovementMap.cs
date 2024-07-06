@@ -8,13 +8,16 @@ namespace StoreMaster.Infrastructure.Persistence.Mapping
     {
         public void Configure(EntityTypeBuilder<StockMovement> builder)
         {
+            builder.HasOne(x => x.StockMovementType).WithMany(x => x.ListStockMovement).HasForeignKey(x => x.StockMovementTypeId);
+
             builder.ToTable("movimento_estoque");
 
             builder.HasKey(x => x.Id).HasName("id");
 
             builder.Property(x => x.CreationDate).HasColumnName("data_criacao");
 
-            builder.Property(x => x.StockMovementType).HasColumnName("tipo_movimento_estoque");
+            builder.Property(x => x.StockMovementTypeId).HasColumnName("id_tipo_movimento_estoque");
+            builder.Property(x => x.StockMovementTypeId).IsRequired();
         }
     }
 }

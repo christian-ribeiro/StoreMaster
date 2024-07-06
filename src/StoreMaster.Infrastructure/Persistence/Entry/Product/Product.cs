@@ -1,6 +1,5 @@
 ﻿using StoreMaster.Domain.DTO;
 using StoreMaster.Infrastructure.Persistence.Entry.Base;
-using System.Text.Json.Serialization;
 
 namespace StoreMaster.Infrastructure.Persistence.Entry
 {
@@ -11,7 +10,6 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
 
         public Product() { }
 
-        [JsonConstructor]
         public Product(long productCategoryId, ProductCategory? productCategory)
         {
             ProductCategoryId = productCategoryId;

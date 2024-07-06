@@ -30,6 +30,7 @@ namespace StoreMaster.Domain.Interface.Repository.Base
         bool Delete(List<TDTO> listDTO);
     }
 
+    #region TInputUpdate TInputIdentityUpdate TInputIdentityDelete
     public interface IBaseRepository_1<TOutput, TInputIdentifier, TInputCreate, TDTO, TInternalPropertiesDTO, TExternalPropertiesDTO, TAuxiliaryPropertiesDTO> : IBaseRepository<TOutput, TInputIdentifier, TInputCreate, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TDTO, TInternalPropertiesDTO, TExternalPropertiesDTO, TAuxiliaryPropertiesDTO>
         where TOutput : BaseOutput<TOutput>
         where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
@@ -38,6 +39,16 @@ namespace StoreMaster.Domain.Interface.Repository.Base
         where TInternalPropertiesDTO : BaseInternalPropertiesDTO<TInternalPropertiesDTO>, new()
         where TExternalPropertiesDTO : BaseExternalPropertiesDTO<TExternalPropertiesDTO>, new()
         where TAuxiliaryPropertiesDTO : BaseAuxiliaryPropertiesDTO<TAuxiliaryPropertiesDTO>, new()
-    {
-    }
+    { }
+    #endregion
+
+    #region TInputCreate TInputUpdate TInputIdentityUpdate TInputIdentityDelete TExternalPropertiesDTO
+    public interface IBaseRepository_2<TOutput, TInputIdentifier, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO> : IBaseRepository<TOutput, TInputIdentifier, BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TDTO, TInternalPropertiesDTO, BaseExternalPropertiesDTO_0, TAuxiliaryPropertiesDTO>
+        where TOutput : BaseOutput<TOutput>
+        where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
+        where TDTO : BaseDTO_2<TOutput, TInputIdentifier, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>, new()
+        where TInternalPropertiesDTO : BaseInternalPropertiesDTO<TInternalPropertiesDTO>, new()
+        where TAuxiliaryPropertiesDTO : BaseAuxiliaryPropertiesDTO<TAuxiliaryPropertiesDTO>, new()
+    { }
+    #endregion
 }
