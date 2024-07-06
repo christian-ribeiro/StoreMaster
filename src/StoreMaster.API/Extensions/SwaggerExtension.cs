@@ -1,9 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc.Controllers;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
+using System.Security.Claims;
 
 namespace StoreMaster.API.Extensions
 {
@@ -11,6 +16,8 @@ namespace StoreMaster.API.Extensions
     {
         public static IServiceCollection ConfigureSwagger(this IServiceCollection services)
         {
+            services.AddSingleton<IPostConfigureOptions<JwtBearerOptions>, ConfigureJwtBearerOptions>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "StoreMaster API", Version = "v1" });
@@ -58,6 +65,8 @@ namespace StoreMaster.API.Extensions
                     var actionDescriptor = api.ActionDescriptor as ControllerActionDescriptor;
                     return [actionDescriptor.ControllerName];
                 });
+
+                c.OperationFilter<AuthorizeCheckOperationFilter>();
             });
 
             services.AddSwaggerGenNewtonsoftSupport();
@@ -66,8 +75,6 @@ namespace StoreMaster.API.Extensions
 
         public static WebApplication ApplySwagger(this WebApplication app, IConfiguration configuration)
         {
-            var googleAuthNSection = configuration.GetSection("Authentication:Google");
-
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -76,12 +83,78 @@ namespace StoreMaster.API.Extensions
                 c.EnableFilter();
                 c.DocExpansion(DocExpansion.None);
                 c.DisplayRequestDuration();
-                c.OAuthClientId(googleAuthNSection["ClientId"]);
-                c.OAuthClientSecret(googleAuthNSection["ClientSecret"]);
+                c.OAuthClientId(configuration["Authentication:Google:ClientId"]);
+                c.OAuthClientSecret(configuration["Authentication:Google:ClientSecret"]);
                 c.OAuthAppName("Store Master");
                 c.OAuthUsePkce();
+                c.OAuthScopeSeparator(" ");
+                c.OAuthScopes("openid", "email", "profile");
+
             });
             return app;
+        }
+
+        public class ConfigureJwtBearerOptions : IPostConfigureOptions<JwtBearerOptions>
+        {
+            public void PostConfigure(string name, JwtBearerOptions options)
+            {
+                if (options.Events == null)
+                    options.Events = new JwtBearerEvents();
+
+                var originalOnTokenValidated = options.Events.OnTokenValidated;
+
+                options.Events.OnTokenValidated = async context =>
+                {
+                    var idToken = context.SecurityToken as JwtSecurityToken;
+                    if (idToken == null)
+                    {
+                        throw new SecurityTokenException("Invalid token format");
+                    }
+
+                    context.Principal.AddIdentity(new ClaimsIdentity(idToken.Claims));
+
+                    if (originalOnTokenValidated != null)
+                    {
+                        await originalOnTokenValidated(context);
+                    }
+                };
+
+                options.Events.OnAuthenticationFailed = async context =>
+                {
+                    var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
+                    logger.LogError("Authentication failed.", context.Exception);
+                };
+            }
+        }
+
+        public class AuthorizeCheckOperationFilter : IOperationFilter
+        {
+            public void Apply(OpenApiOperation operation, OperationFilterContext context)
+            {
+                var authAttributes = context.MethodInfo.DeclaringType
+                    .GetCustomAttributes(true)
+                    .Union(context.MethodInfo.GetCustomAttributes(true))
+                    .OfType<AuthorizeAttribute>();
+
+                if (authAttributes.Any())
+                {
+                    operation.Responses.Add("401", new OpenApiResponse { Description = "Unauthorized" });
+                    operation.Responses.Add("403", new OpenApiResponse { Description = "Forbidden" });
+
+                    var oauth2Scheme = new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "oauth2" }
+                    };
+
+                    operation.Security = new List<OpenApiSecurityRequirement>
+                    {
+                        new OpenApiSecurityRequirement
+                        {
+                            [oauth2Scheme] = new[] { "openid", "email", "profile" }
+                        }
+                    };
+                }
+            }
         }
     }
 }
