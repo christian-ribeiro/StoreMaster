@@ -24,6 +24,7 @@ namespace StoreMaster.API.Extensions
             services.AddScoped<IStockMovementService, StockMovementService>();
             services.AddScoped<IStockMovementTypeService, StockMovementTypeService>();
             #endregion
+
             return services;
         }
     }
