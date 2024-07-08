@@ -20,9 +20,9 @@ namespace StoreMaster.Infrastructure.Persistence.Mapping
 
             builder.HasData(new List<Language>
             {
-                new Language("001", "Português", default).SetInternalData(1, default, default),
-                new Language("002", "English", default).SetInternalData(2, default, default),
-                new Language("003", "Español", default).SetInternalData(3, default, default),
+                new Language("001", "Português").SetInternalData(1),
+                new Language("002", "English").SetInternalData(2),
+                new Language("003", "Español").SetInternalData(3),
             });
         }
     }

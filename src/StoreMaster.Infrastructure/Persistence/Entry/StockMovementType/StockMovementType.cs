@@ -18,11 +18,10 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
 
         public StockMovementType() { }
 
-        public StockMovementType(string code, string description, List<StockMovement> listStockMovement)
+        public StockMovementType(string code, string description)
         {
             Code = code;
             Description = description;
-            ListStockMovement = listStockMovement;
         }
 
 #nullable disable
@@ -31,13 +30,13 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
             return stockMovementType == null ? default : new StockMovementTypeDTO().Load(
                     new InternalPropertiesStockMovementTypeDTO(stockMovementType.Code, stockMovementType.Description).SetInternalData(stockMovementType.Id, stockMovementType.CreationDate, stockMovementType.ChangeDate),
                     default,
-                    new AuxiliaryPropertiesStockMovementTypeDTO(stockMovementType.ListStockMovement.ConvertAll<StockMovementDTO>())
+                    new AuxiliaryPropertiesStockMovementTypeDTO()
                 );
         }
 
         public static StockMovementType GetEntry(StockMovementTypeDTO dto)
         {
-            return dto == null ? default : new StockMovementType(dto.InternalPropertiesDTO.Code, dto.InternalPropertiesDTO.Description, dto.AuxiliaryPropertiesDTO.ListStockMovement.ConvertAll<StockMovement>())
+            return dto == null ? default : new StockMovementType(dto.InternalPropertiesDTO.Code, dto.InternalPropertiesDTO.Description)
                 .SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
 

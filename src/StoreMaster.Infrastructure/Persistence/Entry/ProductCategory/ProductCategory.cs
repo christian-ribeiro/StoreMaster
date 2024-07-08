@@ -1,5 +1,4 @@
 ﻿using StoreMaster.Domain.DTO;
-using StoreMaster.Domain.Extensions;
 using StoreMaster.Infrastructure.Persistence.Entry.Base;
 
 namespace StoreMaster.Infrastructure.Persistence.Entry
@@ -16,11 +15,10 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         #endregion
         public ProductCategory() { }
 
-        public ProductCategory(string code, string description, List<Product> listProduct)
+        public ProductCategory(string code, string description)
         {
             Code = code;
             Description = description;
-            ListProduct = listProduct;
         }
 
 #nullable disable
@@ -29,13 +27,13 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
             return productCategory == null ? default : new ProductCategoryDTO().Load(
                     new InternalPropertiesProductCategoryDTO().SetInternalData(productCategory.Id, productCategory.CreationDate, productCategory.ChangeDate),
                     new ExternalPropertiesProductCategoryDTO(productCategory.Code, productCategory.Description),
-                    new AuxiliaryPropertiesProductCategoryDTO(productCategory.ListProduct.ConvertAll<ProductDTO>())
+                    new AuxiliaryPropertiesProductCategoryDTO()
                 );
         }
 
         public static ProductCategory GetEntry(ProductCategoryDTO dto)
         {
-            return dto == null ? default : new ProductCategory(dto.ExternalPropertiesDTO.Code, dto.ExternalPropertiesDTO.Description, dto.AuxiliaryPropertiesDTO.ListProduct.ConvertAll<Product>()).SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+            return dto == null ? default : new ProductCategory(dto.ExternalPropertiesDTO.Code, dto.ExternalPropertiesDTO.Description).SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
 
         public static implicit operator ProductCategoryDTO(ProductCategory productcategory)

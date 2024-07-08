@@ -21,13 +21,11 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
 
         public Product() { }
 
-        public Product(string description, long productCategoryId, ProductCategory? productCategory, StockConfiguration? stockConfiguration, List<StockMovement> listStockMovement)
+        public Product(string description, long productCategoryId, ProductCategory? productCategory)
         {
             Description = description;
             ProductCategoryId = productCategoryId;
             ProductCategory = productCategory;
-            StockConfiguration = stockConfiguration;
-            ListStockMovement = listStockMovement;
         }
 
 #nullable disable
@@ -36,13 +34,13 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
             return product == null ? default : new ProductDTO().Load(
                     new InternalPropertiesProductDTO().SetInternalData(product.Id, product.CreationDate, product.ChangeDate),
                     new ExternalPropertiesProductDTO(product.Description, product.ProductCategoryId),
-                    new AuxiliaryPropertiesProductDTO(product.ProductCategory, product.StockConfiguration, product.ListStockMovement.ConvertAll<StockMovementDTO>())
+                    new AuxiliaryPropertiesProductDTO(product.ProductCategory)
                 );
         }
 
         public static Product GetEntry(ProductDTO dto)
         {
-            return dto == null ? default : new Product(dto.ExternalPropertiesDTO.Description, dto.ExternalPropertiesDTO.ProductCategoryId, dto.AuxiliaryPropertiesDTO.ProductCategory, dto.AuxiliaryPropertiesDTO.StockConfiguration, dto.AuxiliaryPropertiesDTO.ListStockMovement.ConvertAll<StockMovement>())
+            return dto == null ? default : new Product(dto.ExternalPropertiesDTO.Description, dto.ExternalPropertiesDTO.ProductCategoryId, dto.AuxiliaryPropertiesDTO.ProductCategory)
                 .SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
 

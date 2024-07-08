@@ -12,12 +12,12 @@ namespace StoreMaster.Domain.DTO
             return output == null ? default : new StockMovementTypeDTO().Load(
                 new InternalPropertiesStockMovementTypeDTO(output.Code, output.Description).SetInternalData(output.Id, output.CreationDate, output.ChangeDate),
                 default,
-                new AuxiliaryPropertiesStockMovementTypeDTO(output.ListOutputStockMovement.ConvertAll<StockMovementDTO>()));
+                new AuxiliaryPropertiesStockMovementTypeDTO());
         }
 
         public static OutputStockMovementType GetOutput(StockMovementTypeDTO dto)
         {
-            return dto == null ? default : new OutputStockMovementType(dto.InternalPropertiesDTO.Code, dto.InternalPropertiesDTO.Description, dto.AuxiliaryPropertiesDTO.ListStockMovement.ConvertAll<OutputStockMovement>())
+            return dto == null ? default : new OutputStockMovementType(dto.InternalPropertiesDTO.Code, dto.InternalPropertiesDTO.Description)
                 .SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
 

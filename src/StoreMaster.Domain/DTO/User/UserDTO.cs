@@ -1,6 +1,5 @@
 ﻿using StoreMaster.Arguments.Arguments;
 using StoreMaster.Domain.DTO.Base;
-using StoreMaster.Domain.Extensions;
 
 namespace StoreMaster.Domain.DTO
 {

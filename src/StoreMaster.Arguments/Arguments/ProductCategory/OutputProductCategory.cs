@@ -6,15 +6,13 @@ namespace StoreMaster.Arguments.Arguments
     {
         public string Code { get; set; }
         public string Description { get; set; }
-        public List<OutputProduct> ListProduct { get; set; }
 
         public OutputProductCategory() { }
 
-        public OutputProductCategory(string code, string description, List<OutputProduct> listProduct)
+        public OutputProductCategory(string code, string description)
         {
             Code = code;
             Description = description;
-            ListProduct = listProduct;
         }
     }
 }

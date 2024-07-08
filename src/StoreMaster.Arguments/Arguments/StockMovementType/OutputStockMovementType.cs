@@ -15,19 +15,12 @@ namespace StoreMaster.Arguments.Arguments
         public string Code { get; set; }
         public string Description { get; set; }
 
-        #region Virtual Properties
-        #region External
-        public List<OutputStockMovement> ListOutputStockMovement { get; set; }
-        #endregion
-        #endregion
-
         public OutputStockMovementType() { }
 
-        public OutputStockMovementType(string code, string description, List<OutputStockMovement> listOutputStockMovement)
+        public OutputStockMovementType(string code, string description)
         {
             Code = code;
             Description = description;
-            ListOutputStockMovement = listOutputStockMovement;
         }
     }
 }

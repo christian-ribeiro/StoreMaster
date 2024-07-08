@@ -29,5 +29,11 @@ namespace StoreMaster.Infrastructure.Persistence.Entry.Base
             ChangeDate = changeDate;
             return (TEntry)this;
         }
+
+        public TEntry SetInternalData(long id)
+        {
+            Id = id;
+            return (TEntry)this;
+        }
     }
 }

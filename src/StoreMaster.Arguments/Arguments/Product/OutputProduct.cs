@@ -11,21 +11,15 @@ namespace StoreMaster.Arguments.Arguments
         #region Internal
         public OutputProductCategory ProductCategory { get; set; }
         #endregion
-        #region External
-        public OutputStockConfiguration StockConfiguration { get; set; }
-        public List<OutputStockMovement> ListStockMovement { get; set; }
-        #endregion
         #endregion
 
         public OutputProduct() { }
 
-        public OutputProduct(string description, long productCategoryId, OutputProductCategory productCategory, OutputStockConfiguration stockConfiguration, List<OutputStockMovement> listStockMovement)
+        public OutputProduct(string description, long productCategoryId, OutputProductCategory productCategory)
         {
             Description = description;
             ProductCategoryId = productCategoryId;
             ProductCategory = productCategory;
-            StockConfiguration = stockConfiguration;
-            ListStockMovement = listStockMovement;
         }
     }
 }

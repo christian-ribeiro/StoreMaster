@@ -20,8 +20,8 @@ namespace StoreMaster.Infrastructure.Persistence.Mapping
 
             builder.HasData(new List<StockMovementType>
             {
-                new StockMovementType("001", "Entrada", default).SetInternalData(1, default, default),
-                new StockMovementType("002", "Saída", default).SetInternalData(2, default, default),
+                new StockMovementType("001", "Entrada").SetInternalData(1),
+                new StockMovementType("002", "Saída").SetInternalData(2),
             });
         }
     }

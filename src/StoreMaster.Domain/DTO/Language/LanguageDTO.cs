@@ -1,6 +1,5 @@
 ﻿using StoreMaster.Arguments.Arguments;
 using StoreMaster.Domain.DTO.Base;
-using StoreMaster.Domain.Extensions;
 
 namespace StoreMaster.Domain.DTO
 {
@@ -12,12 +11,12 @@ namespace StoreMaster.Domain.DTO
             return output == null ? default : new LanguageDTO().Load(
                 new InternalPropertiesLanguageDTO(output.Code, output.Description).SetInternalData(output.Id, output.CreationDate, output.ChangeDate),
                 default,
-                new AuxiliaryPropertiesLanguageDTO(output.ListUser.ConvertAll<UserDTO>()));
+                new AuxiliaryPropertiesLanguageDTO());
         }
 
         public static OutputLanguage GetOutput(LanguageDTO dto)
         {
-            return dto == null ? default : new OutputLanguage(dto.InternalPropertiesDTO.Code, dto.InternalPropertiesDTO.Description, dto.AuxiliaryPropertiesDTO.ListUser.ConvertAll<OutputUser>())
+            return dto == null ? default : new OutputLanguage(dto.InternalPropertiesDTO.Code, dto.InternalPropertiesDTO.Description)
                 .SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
 

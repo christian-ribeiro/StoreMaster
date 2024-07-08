@@ -12,12 +12,12 @@ namespace StoreMaster.Domain.DTO
             return output == null ? default : new ProductDTO().Load(
                 new InternalPropertiesProductDTO().SetInternalData(output.Id, output.CreationDate, output.ChangeDate),
                 new ExternalPropertiesProductDTO(output.Description, output.ProductCategoryId),
-                new AuxiliaryPropertiesProductDTO(output.ProductCategory, output.StockConfiguration, output.ListStockMovement.ConvertAll<StockMovementDTO>()));
+                new AuxiliaryPropertiesProductDTO(output.ProductCategory));
         }
 
         public static OutputProduct GetOutput(ProductDTO dto)
         {
-            return dto == null ? default : new OutputProduct(dto.ExternalPropertiesDTO.Description, dto.ExternalPropertiesDTO.ProductCategoryId, dto.AuxiliaryPropertiesDTO.ProductCategory, dto.AuxiliaryPropertiesDTO.StockConfiguration, dto.AuxiliaryPropertiesDTO.ListStockMovement.ConvertAll<OutputStockMovement>())
+            return dto == null ? default : new OutputProduct(dto.ExternalPropertiesDTO.Description, dto.ExternalPropertiesDTO.ProductCategoryId, dto.AuxiliaryPropertiesDTO.ProductCategory)
                 .SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
 

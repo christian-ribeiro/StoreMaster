@@ -20,8 +20,8 @@ namespace StoreMaster.Infrastructure.Persistence.Mapping
 
             builder.HasData(new List<UserStatus>
             {
-                new UserStatus("001", "Ativo", default).SetInternalData(1, default, default),
-                new UserStatus("002", "Inativo", default).SetInternalData(2, default, default),
+                new UserStatus("001", "Ativo").SetInternalData(1),
+                new UserStatus("002", "Inativo").SetInternalData(2),
             });
         }
     }

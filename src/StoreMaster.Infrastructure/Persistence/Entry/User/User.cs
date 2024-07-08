@@ -1,5 +1,4 @@
 ﻿using StoreMaster.Domain.DTO;
-using StoreMaster.Domain.Extensions;
 using StoreMaster.Infrastructure.Persistence.Entry.Base;
 
 namespace StoreMaster.Infrastructure.Persistence.Entry

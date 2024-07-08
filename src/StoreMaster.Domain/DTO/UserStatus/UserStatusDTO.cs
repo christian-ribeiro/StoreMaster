@@ -1,6 +1,5 @@
 ﻿using StoreMaster.Arguments.Arguments;
 using StoreMaster.Domain.DTO.Base;
-using StoreMaster.Domain.Extensions;
 
 namespace StoreMaster.Domain.DTO
 {
@@ -12,12 +11,12 @@ namespace StoreMaster.Domain.DTO
             return output == null ? default : new UserStatusDTO().Load(
                 new InternalPropertiesUserStatusDTO(output.Code, output.Description).SetInternalData(output.Id, output.CreationDate, output.ChangeDate),
                 default,
-                new AuxiliaryPropertiesUserStatusDTO(output.ListUser.ConvertAll<UserDTO>()));
+                new AuxiliaryPropertiesUserStatusDTO());
         }
 
         public static OutputUserStatus GetOutput(UserStatusDTO dto)
         {
-            return dto == null ? default : new OutputUserStatus(dto.InternalPropertiesDTO.Code, dto.InternalPropertiesDTO.Description, dto.AuxiliaryPropertiesDTO.ListUser.ConvertAll<OutputUser>())
+            return dto == null ? default : new OutputUserStatus(dto.InternalPropertiesDTO.Code, dto.InternalPropertiesDTO.Description)
                 .SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
 

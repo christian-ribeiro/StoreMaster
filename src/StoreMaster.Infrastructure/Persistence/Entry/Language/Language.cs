@@ -1,5 +1,4 @@
 ﻿using StoreMaster.Domain.DTO;
-using StoreMaster.Domain.Extensions;
 using StoreMaster.Infrastructure.Persistence.Entry.Base;
 
 namespace StoreMaster.Infrastructure.Persistence.Entry
@@ -17,37 +16,36 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
 
         public Language() { }
 
-        public Language(string code, string description, List<User> listUser)
+        public Language(string code, string description)
         {
             Code = code;
             Description = description;
-            ListUser = listUser;
         }
 
 #nullable disable
-        public static LanguageDTO GetDTO(Language language)
+        public LanguageDTO GetDTO()
         {
-            return language == null ? default : new LanguageDTO().Load(
-                    new InternalPropertiesLanguageDTO(language.Code, language.Description).SetInternalData(language.Id),
+            return new LanguageDTO().Load(
+                    new InternalPropertiesLanguageDTO(Code, Description).SetInternalData(Id),
                     default,
-                    new AuxiliaryPropertiesLanguageDTO(language.ListUser.ConvertAll<UserDTO>())
+                    new AuxiliaryPropertiesLanguageDTO()
                 );
         }
 
-        public static Language GetEntry(LanguageDTO dto)
+        public Language GetEntry(LanguageDTO dto)
         {
-            return dto == null ? default : new Language(dto.InternalPropertiesDTO.Code, dto.InternalPropertiesDTO.Description, dto.AuxiliaryPropertiesDTO.ListUser.ConvertAll<User>())
+            return dto == null ? default : new Language(dto.InternalPropertiesDTO.Code, dto.InternalPropertiesDTO.Description)
                 .SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
 
         public static implicit operator LanguageDTO(Language language)
         {
-            return GetDTO(language);
+            return new Language().GetDTO();
         }
 
         public static implicit operator Language(LanguageDTO dto)
         {
-            return GetEntry(dto);
+            return new Language().GetEntry(dto);
         }
 #nullable enable
     }

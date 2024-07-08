@@ -15,17 +15,10 @@ namespace StoreMaster.Arguments.Arguments
         public string Code { get; set; }
         public string Description { get; set; }
 
-        #region Virtual Properties
-        #region External
-        public List<OutputUser> ListUser { get; set; }
-        #endregion
-        #endregion
-
-        public OutputUserStatus(string code, string description, List<OutputUser> listUser)
+        public OutputUserStatus(string code, string description)
         {
             Code = code;
             Description = description;
-            ListUser = listUser;
         }
     }
 }

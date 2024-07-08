@@ -1,5 +1,4 @@
 ﻿using StoreMaster.Domain.DTO;
-using StoreMaster.Domain.Extensions;
 using StoreMaster.Infrastructure.Persistence.Entry.Base;
 
 namespace StoreMaster.Infrastructure.Persistence.Entry
@@ -17,11 +16,10 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
 
         public UserStatus() { }
 
-        public UserStatus(string code, string description, List<User> listUser)
+        public UserStatus(string code, string description)
         {
             Code = code;
             Description = description;
-            ListUser = listUser;
         }
 
 #nullable disable
@@ -30,13 +28,13 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
             return userStatus == null ? default : new UserStatusDTO().Load(
                     new InternalPropertiesUserStatusDTO(userStatus.Code, userStatus.Description).SetInternalData(userStatus.Id, userStatus.CreationDate, userStatus.ChangeDate),
                     default,
-                    new AuxiliaryPropertiesUserStatusDTO(userStatus.ListUser.ConvertAll<UserDTO>())
+                    new AuxiliaryPropertiesUserStatusDTO()
                 );
         }
 
         public static UserStatus GetEntry(UserStatusDTO dto)
         {
-            return dto == null ? default : new UserStatus(dto.InternalPropertiesDTO.Code, dto.InternalPropertiesDTO.Description, dto.AuxiliaryPropertiesDTO.ListUser.ConvertAll<User>())
+            return dto == null ? default : new UserStatus(dto.InternalPropertiesDTO.Code, dto.InternalPropertiesDTO.Description)
                 .SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
 

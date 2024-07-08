@@ -16,8 +16,6 @@ namespace StoreMaster.Arguments.Arguments
         public OutputLanguage Language { get; set; }
         public OutputUserStatus UserStatus { get; set; }
         #endregion
-        #region External
-        #endregion
         #endregion
 
         public OutputUser() { }

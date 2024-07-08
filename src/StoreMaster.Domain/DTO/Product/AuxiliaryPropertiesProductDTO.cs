@@ -8,19 +8,13 @@ namespace StoreMaster.Domain.DTO
         #region Internal
         public ProductCategoryDTO ProductCategory { get; private set; }
         #endregion
-        #region External
-        public StockConfigurationDTO StockConfiguration { get; private set; }
-        public List<StockMovementDTO> ListStockMovement { get; private set; }
-        #endregion
         #endregion
 
         public AuxiliaryPropertiesProductDTO() { }
 
-        public AuxiliaryPropertiesProductDTO(ProductCategoryDTO productCategory, StockConfigurationDTO stockConfiguration, List<StockMovementDTO> listStockMovement)
+        public AuxiliaryPropertiesProductDTO(ProductCategoryDTO productCategory)
         {
             ProductCategory = productCategory;
-            StockConfiguration = stockConfiguration;
-            ListStockMovement = listStockMovement;
         }
     }
 }
