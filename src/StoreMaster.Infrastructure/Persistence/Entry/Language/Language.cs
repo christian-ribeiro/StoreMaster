@@ -39,7 +39,7 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         }
 
 #nullable disable
-        public LanguageDTO GetDTO(Language language)
+        public static LanguageDTO GetDTO(Language language)
         {
             return language == null ? default : new LanguageDTO().Load(
                     new InternalPropertiesLanguageDTO(language.Code, language.Description).SetInternalData(language.Id),
@@ -47,7 +47,7 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
                     new AuxiliaryPropertiesLanguageDTO());
         }
 
-        public Language GetEntry(LanguageDTO dto)
+        public static Language GetEntry(LanguageDTO dto)
         {
             return dto == null ? default : new Language(dto.InternalPropertiesDTO.Code, dto.InternalPropertiesDTO.Description)
                 .SetInternalData(dto.InternalPropertiesDTO.Id);
@@ -55,12 +55,12 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
 
         public static implicit operator LanguageDTO(Language language)
         {
-            return new Language().GetDTO(language);
+            return GetDTO(language);
         }
 
         public static implicit operator Language(LanguageDTO dto)
         {
-            return new Language().GetEntry(dto);
+            return GetEntry(dto);
         }
 #nullable enable
     }
