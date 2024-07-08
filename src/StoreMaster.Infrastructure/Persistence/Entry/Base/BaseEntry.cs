@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace StoreMaster.Infrastructure.Persistence.Entry.Base
+﻿namespace StoreMaster.Infrastructure.Persistence.Entry.Base
 {
     public class BaseEntry<TEntry> where TEntry : BaseEntry<TEntry>
     {

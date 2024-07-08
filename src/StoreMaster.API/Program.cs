@@ -1,5 +1,4 @@
 using StoreMaster.API.Extensions;
-using StoreMaster.Arguments.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 

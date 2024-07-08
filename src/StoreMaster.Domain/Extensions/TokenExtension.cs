@@ -19,7 +19,7 @@ namespace StoreMaster.Domain.Extensions
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Name, user.Name),
-                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
+                new Claim("UserId", user.Id.ToString()),
             };
 
             var token = new JwtSecurityToken(

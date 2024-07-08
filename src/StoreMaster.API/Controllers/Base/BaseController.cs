@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using StoreMaster.Arguments;
 using StoreMaster.Arguments.Arguments.Base;
+using StoreMaster.Domain.Interface.Service;
 using StoreMaster.Domain.Interface.Service.Base;
 
 namespace StoreMaster.API.Controllers.Base
@@ -8,7 +11,7 @@ namespace StoreMaster.API.Controllers.Base
     [Authorize]
     [ApiController]
     [Route("/api/[controller]")]
-    public class BaseController<TService, TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete>(TService service) : Controller
+    public class BaseController<TService, TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete>(TService service, IUserService userService) : Controller
         where TService : IBaseService<TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete>
         where TOutput : BaseOutput<TOutput>
         where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
@@ -18,7 +21,24 @@ namespace StoreMaster.API.Controllers.Base
         where TInputIdentityDelete : BaseInputIdentityDelete<TInputIdentityDelete>
     {
         protected readonly TService _service = service;
+        private readonly IUserService _userService = userService;
 
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            var allowAnonymous = context.ActionDescriptor.EndpointMetadata.Any(em => em.GetType() == typeof(AllowAnonymousAttribute));
+
+            if (!allowAnonymous)
+            {
+                long userId = Convert.ToInt64(Request.HttpContext.User.FindFirst("UserId").Value ?? "");
+                var loggedUser = _userService.Get(userId);
+
+                SessionData.SetLoggedUser(new LoggedUser(loggedUser.Id, loggedUser.Code, loggedUser.Name, loggedUser.Email, loggedUser.LanguageId, loggedUser.UserStatusId));
+            }
+
+            base.OnActionExecuting(context);
+        }
+
+        #region Read
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<BaseResponseApi<TOutput>>> Get(long id)
         {
@@ -83,7 +103,9 @@ namespace StoreMaster.API.Controllers.Base
                 return await ResponseExceptionAsync(ex);
             }
         }
+        #endregion
 
+        #region Create
         [HttpPost("Create")]
         public virtual async Task<ActionResult<BaseResponseApi<long>>> Create(TInputCreate inputCreate)
         {
@@ -109,7 +131,9 @@ namespace StoreMaster.API.Controllers.Base
                 return await ResponseExceptionAsync(ex);
             }
         }
+        #endregion
 
+        #region Update
         [HttpPut("Update")]
         public virtual async Task<ActionResult<BaseResponseApi<long>>> Update(TInputIdentityUpdate inputIdentityUpdate)
         {
@@ -135,7 +159,9 @@ namespace StoreMaster.API.Controllers.Base
                 return await ResponseExceptionAsync(ex);
             }
         }
+        #endregion
 
+        #region Delete
         [HttpDelete("Delete")]
         public virtual async Task<ActionResult<BaseResponseApi<bool>>> Delete(TInputIdentityDelete inputIdentityDelete)
         {
@@ -161,7 +187,9 @@ namespace StoreMaster.API.Controllers.Base
                 return await ResponseExceptionAsync(ex);
             }
         }
+        #endregion
 
+        #region Internal
         [NonAction]
         public async Task<ActionResult> ResponseAsync<ResponseType>(ResponseType result, int statusCode = 0)
         {
@@ -180,9 +208,10 @@ namespace StoreMaster.API.Controllers.Base
         {
             return await Task.FromResult(BadRequest(new BaseResponseApi<string> { ErrorMessage = ex.Message }));
         }
+        #endregion
     }
 
-    public class BaseController_1<TService, TOutput, TInputIdentifier, TInputCreate>(TService service) : BaseController<TService, TOutput, TInputIdentifier, TInputCreate, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0>(service)
+    public class BaseController_1<TService, TOutput, TInputIdentifier, TInputCreate>(TService service, IUserService userService) : BaseController<TService, TOutput, TInputIdentifier, TInputCreate, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0>(service, userService)
     where TService : IBaseService_1<TOutput, TInputIdentifier, TInputCreate>
     where TOutput : BaseOutput<TOutput>
     where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
@@ -213,7 +242,7 @@ namespace StoreMaster.API.Controllers.Base
         }
     }
 
-    public class BaseController_2<TService, TOutput, TInputIdentifier>(TService service) : BaseController<TService, TOutput, TInputIdentifier, BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0>(service)
+    public class BaseController_2<TService, TOutput, TInputIdentifier>(TService service, IUserService userService) : BaseController<TService, TOutput, TInputIdentifier, BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0>(service, userService)
     where TService : IBaseService_2<TOutput, TInputIdentifier>
     where TOutput : BaseOutput<TOutput>
     where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()

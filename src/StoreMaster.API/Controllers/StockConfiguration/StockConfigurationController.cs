@@ -4,5 +4,5 @@ using StoreMaster.Domain.Interface.Service;
 
 namespace StoreMaster.API.Controllers.StockConfiguration
 {
-    public class StockConfigurationController(IStockConfigurationService service) : BaseController<IStockConfigurationService, OutputStockConfiguration, InputIdentifierStockConfiguration, InputCreateStockConfiguration, InputUpdateStockConfiguration, InputIdentityUpdateStockConfiguration, InputIdentityDeleteStockConfiguration>(service) { }
+    public class StockConfigurationController(IStockConfigurationService service, IUserService userService) : BaseController<IStockConfigurationService, OutputStockConfiguration, InputIdentifierStockConfiguration, InputCreateStockConfiguration, InputUpdateStockConfiguration, InputIdentityUpdateStockConfiguration, InputIdentityDeleteStockConfiguration>(service, userService) { }
 }

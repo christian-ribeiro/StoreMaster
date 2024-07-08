@@ -18,7 +18,7 @@ namespace StoreMaster.Domain.Service
             if (originalUserDTO == null)
                 throw new ArgumentNullException("Usuário ou senha inválidos");
 
-            if(!originalUserDTO.ExternalPropertiesDTO.Password.VerifyPassword(inputAuthenticationUser.Password))
+            if (!originalUserDTO.ExternalPropertiesDTO.Password.VerifyPassword(inputAuthenticationUser.Password))
                 throw new ArgumentNullException("Usuário ou senha inválidos");
 
             string token = TokenExtension.GenerateJwtToken(originalUserDTO);

@@ -4,5 +4,5 @@ using StoreMaster.Domain.Interface.Service;
 
 namespace StoreMaster.API.Controllers
 {
-    public class ProductCategoryController(IProductCategoryService service) : BaseController<IProductCategoryService, OutputProductCategory, InputIdentifierProductCategory, InputCreateProductCategory, InputUpdateProductCategory, InputIdentityUpdateProductCategory, InputIdentityDeleteProductCategory>(service) { }
+    public class ProductCategoryController(IProductCategoryService service, IUserService userService) : BaseController<IProductCategoryService, OutputProductCategory, InputIdentifierProductCategory, InputCreateProductCategory, InputUpdateProductCategory, InputIdentityUpdateProductCategory, InputIdentityDeleteProductCategory>(service, userService) { }
 }

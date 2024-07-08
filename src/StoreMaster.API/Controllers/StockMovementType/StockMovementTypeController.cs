@@ -4,5 +4,5 @@ using StoreMaster.Domain.Interface.Service;
 
 namespace StoreMaster.API.Controllers.StockMovementType
 {
-    public class StockMovementTypeController(IStockMovementTypeService service) : BaseController_2<IStockMovementTypeService, OutputStockMovementType, InputIdentifierStockMovementType>(service) { }
+    public class StockMovementTypeController(IStockMovementTypeService service, IUserService userService) : BaseController_2<IStockMovementTypeService, OutputStockMovementType, InputIdentifierStockMovementType>(service, userService) { }
 }

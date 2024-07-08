@@ -1,4 +1,6 @@
-﻿namespace StoreMaster.Domain.DTO.Base
+﻿using StoreMaster.Arguments;
+
+namespace StoreMaster.Domain.DTO.Base
 {
     public abstract class BaseInternalPropertiesDTO<TInternalPropertiesDTO> where TInternalPropertiesDTO : BaseInternalPropertiesDTO<TInternalPropertiesDTO>, new()
     {
@@ -41,12 +43,22 @@
         public TInternalPropertiesDTO SetCreateData()
         {
             CreationDate = DateTime.Now;
+
+            LoggedUser loggedUser = SessionData.GetLoggedUser();
+            if (loggedUser != null)
+                CreationUserId = loggedUser.Id;
+
             return (TInternalPropertiesDTO)this;
         }
 
         public TInternalPropertiesDTO SetUpdateData()
         {
             ChangeDate = DateTime.Now;
+
+            LoggedUser loggedUser = SessionData.GetLoggedUser();
+            if (loggedUser != null)
+                ChangeUserId = loggedUser.Id;
+
             return (TInternalPropertiesDTO)this;
         }
     }
