@@ -44,7 +44,7 @@ namespace StoreMaster.Domain.DTO.Base
         {
             CreationDate = DateTime.Now;
 
-            LoggedUser loggedUser = SessionData.GetLoggedUser();
+            LoggedUser? loggedUser = SessionData.GetLoggedUser();
             if (loggedUser != null)
                 CreationUserId = loggedUser.Id;
 
@@ -55,7 +55,7 @@ namespace StoreMaster.Domain.DTO.Base
         {
             ChangeDate = DateTime.Now;
 
-            LoggedUser loggedUser = SessionData.GetLoggedUser();
+            LoggedUser? loggedUser = SessionData.GetLoggedUser();
             if (loggedUser != null)
                 ChangeUserId = loggedUser.Id;
 
