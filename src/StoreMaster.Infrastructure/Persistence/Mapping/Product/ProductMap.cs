@@ -10,7 +10,7 @@ namespace StoreMaster.Infrastructure.Persistence.Mapping
         {
             builder.ToTable("produto");
 
-            builder.HasOne(x => x.ProductCategory).WithMany(x => x.ListProduct).HasForeignKey(x => x.ProductCategoryId).HasConstraintName("FK_produto_categoria_produto_id_categoria_produto");
+            builder.HasOne(x => x.ProductCategory).WithMany(x => x.ListProduct).HasForeignKey(x => x.ProductCategoryId);
 
             builder.HasKey(x => x.Id).HasName("id");
 
