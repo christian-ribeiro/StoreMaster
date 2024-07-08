@@ -29,6 +29,7 @@ namespace StoreMaster.API.Extensions
             services.AddScoped<ILanguageService, LanguageService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserStatusService, UserStatusService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
             #endregion
             return services;
         }

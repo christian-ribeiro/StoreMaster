@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StoreMaster.Arguments.Arguments.Base;
 using StoreMaster.Domain.Interface.Service.Base;
 
 namespace StoreMaster.API.Controllers.Base
 {
+    [Authorize]
     [ApiController]
     [Route("/api/[controller]")]
     public class BaseController<TService, TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete>(TService service) : Controller
@@ -15,7 +17,7 @@ namespace StoreMaster.API.Controllers.Base
         where TInputIdentityUpdate : BaseInputIdentityUpdate<TInputUpdate>
         where TInputIdentityDelete : BaseInputIdentityDelete<TInputIdentityDelete>
     {
-        private readonly TService _service = service;
+        protected readonly TService _service = service;
 
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<BaseResponseApi<TOutput>>> Get(long id)

@@ -1,5 +1,6 @@
 ﻿using StoreMaster.Domain.DTO;
 using StoreMaster.Infrastructure.Persistence.Entry.Base;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StoreMaster.Infrastructure.Persistence.Entry
 {
@@ -7,6 +8,16 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
     {
         public long ProductId { get; private set; }
         public long StockMovementTypeId { get; private set; }
+
+        #region NotMapped
+        [NotMapped]
+        public override DateTime? ChangeDate => base.ChangeDate;
+        [NotMapped]
+        public override long? ChangeUserId => base.ChangeUserId;
+        [NotMapped]
+        public override User? ChangeUser => base.ChangeUser;
+        #endregion
+
 
         #region Virtual Properties
         #region Internal

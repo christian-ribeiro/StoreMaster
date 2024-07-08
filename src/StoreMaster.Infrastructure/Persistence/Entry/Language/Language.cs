@@ -1,5 +1,6 @@
 ﻿using StoreMaster.Domain.DTO;
 using StoreMaster.Infrastructure.Persistence.Entry.Base;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StoreMaster.Infrastructure.Persistence.Entry
 {
@@ -7,6 +8,21 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
     {
         public string Code { get; private set; }
         public string Description { get; private set; }
+
+        #region NotMapped
+        [NotMapped]
+        public override DateTime CreationDate => base.CreationDate;
+        [NotMapped]
+        public override DateTime? ChangeDate => base.ChangeDate;
+        [NotMapped]
+        public override long CreationUserId => base.CreationUserId;
+        [NotMapped]
+        public override long? ChangeUserId => base.ChangeUserId;
+        [NotMapped]
+        public override User? CreationUser => base.CreationUser;
+        [NotMapped]
+        public override User? ChangeUser => base.ChangeUser;
+        #endregion
 
         #region Virtual Properties
         #region External
@@ -23,13 +39,12 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         }
 
 #nullable disable
-        public LanguageDTO GetDTO()
+        public LanguageDTO GetDTO(Language language)
         {
-            return new LanguageDTO().Load(
-                    new InternalPropertiesLanguageDTO(Code, Description).SetInternalData(Id),
+            return language == null ? default : new LanguageDTO().Load(
+                    new InternalPropertiesLanguageDTO(language.Code, language.Description).SetInternalData(language.Id),
                     default,
-                    new AuxiliaryPropertiesLanguageDTO()
-                );
+                    new AuxiliaryPropertiesLanguageDTO());
         }
 
         public Language GetEntry(LanguageDTO dto)
@@ -40,7 +55,7 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
 
         public static implicit operator LanguageDTO(Language language)
         {
-            return new Language().GetDTO();
+            return new Language().GetDTO(language);
         }
 
         public static implicit operator Language(LanguageDTO dto)

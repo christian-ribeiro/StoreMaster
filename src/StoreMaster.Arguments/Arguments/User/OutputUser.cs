@@ -1,9 +1,21 @@
 ﻿using StoreMaster.Arguments.Arguments.Base;
+using System.Text.Json.Serialization;
 
 namespace StoreMaster.Arguments.Arguments
 {
     public class OutputUser : BaseOutput<OutputUser>
     {
+        #region Ignore
+        [JsonIgnore]
+        public override long CreationUserId { get => base.CreationUserId; set => base.CreationUserId = value; }
+        [JsonIgnore]
+        public override long? ChangeUserId { get => base.ChangeUserId; set => base.ChangeUserId = value; }
+        [JsonIgnore]
+        public override OutputUser CreationUser { get => base.CreationUser; set => base.CreationUser = value; }
+        [JsonIgnore]
+        public override OutputUser ChangeUser { get => base.ChangeUser; set => base.ChangeUser = value; }
+        #endregion
+
         public string Code { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }

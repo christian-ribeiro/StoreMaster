@@ -4,21 +4,15 @@ namespace StoreMaster.Infrastructure.Persistence.Entry.Base
 {
     public class BaseEntry<TEntry> where TEntry : BaseEntry<TEntry>
     {
-        public long Id { get; set; }
-        [NotMapped]
-        public virtual DateTime CreationDate { get; set; }
-        [NotMapped]
-        public virtual DateTime? ChangeDate { get; set; }
-        [NotMapped]
-        public long CreationUserId { get; private set; }
-        [NotMapped]
-        public long? ChangeUserId { get; private set; }
+        public long Id { get; private set; }
+        public virtual DateTime CreationDate { get; private set; }
+        public virtual DateTime? ChangeDate { get; private set; }
+        public virtual long CreationUserId { get; private set; }
+        public virtual long? ChangeUserId { get; private set; }
 
         #region Virtual Properties
         #region Internal
-        [NotMapped]
         public virtual User? CreationUser { get; private set; }
-        [NotMapped]
         public virtual User? ChangeUser { get; private set; }
         #endregion
         #endregion

@@ -1,7 +1,9 @@
 using StoreMaster.API.Extensions;
+using StoreMaster.Arguments.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.ConfigureSettings(builder.Configuration);
 builder.Services.ConfigureContext(builder.Configuration);
 builder.Services.ConfigureCors();
 builder.Services.ConfigureAuthentication();

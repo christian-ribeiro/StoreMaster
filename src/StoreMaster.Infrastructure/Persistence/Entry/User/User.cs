@@ -1,5 +1,6 @@
 ﻿using StoreMaster.Domain.DTO;
 using StoreMaster.Infrastructure.Persistence.Entry.Base;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StoreMaster.Infrastructure.Persistence.Entry
 {
@@ -12,6 +13,17 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         public long LanguageId { get; private set; }
         public long UserStatusId { get; private set; }
 
+        #region NotMapped
+        [NotMapped]
+        public override long CreationUserId => base.CreationUserId;
+        [NotMapped]
+        public override long? ChangeUserId => base.ChangeUserId;
+        [NotMapped]
+        public override User? CreationUser => base.CreationUser;
+        [NotMapped]
+        public override User? ChangeUser => base.ChangeUser;
+        #endregion
+
         #region Virtual Properties
         #region Internal
         public virtual Language? Language { get; private set; }
@@ -19,18 +31,25 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         #endregion
         #region Base External
         #region ProductCategory
+        [NotMapped]
         public virtual List<ProductCategory> ListCreationUserProductCategory { get; private set; }
+        [NotMapped]
         public virtual List<ProductCategory> ListChangeUserProductCategory { get; private set; }
         #endregion
         #region Product
+        [NotMapped]
         public virtual List<Product> ListCreationUserProduct { get; private set; }
+        [NotMapped]
         public virtual List<Product> ListChangeUserProduct { get; private set; }
         #endregion
         #region StockConfiguration
+        [NotMapped]
         public virtual List<StockConfiguration> ListCreationUserStockConfiguration { get; private set; }
+        [NotMapped]
         public virtual List<StockConfiguration> ListChangeUserStockConfiguration { get; private set; }
         #endregion
         #region StockMovement
+        [NotMapped]
         public virtual List<StockMovement> ListCreationUserStockMovement { get; private set; }
         #endregion
         #endregion
