@@ -1,8 +1,10 @@
 ﻿using StoreMaster.Arguments;
+using StoreMaster.Arguments.Arguments.Base;
 
 namespace StoreMaster.Domain.DTO.Base
 {
-    public abstract class BaseInternalPropertiesDTO<TInternalPropertiesDTO> where TInternalPropertiesDTO : BaseInternalPropertiesDTO<TInternalPropertiesDTO>, new()
+    public abstract class BaseInternalPropertiesDTO<TInternalPropertiesDTO> : BaseSetProperty<TInternalPropertiesDTO>
+        where TInternalPropertiesDTO : BaseInternalPropertiesDTO<TInternalPropertiesDTO>, new()
     {
         public long Id { get; private set; }
         public virtual DateTime CreationDate { get; private set; }

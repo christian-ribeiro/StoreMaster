@@ -5,7 +5,8 @@ namespace StoreMaster.Domain.Interface.Service
 {
     public interface IAuthenticationService
     {
-        OutputAuthenticationUser SignIn(InputAuthenticationUser inputAuthenticationUser);
-        long Register(InputRegisterAuthenticationUser inputRegisterAuthenticationUser);
+        OutputAuthentication Login(InputAuthentication inputAuthentication);
+        OutputAuthentication RefreshToken(InputRefreshTokenAuthentication inputRefreshTokenAuthentication);
+        long Register(InputRegisterAuthentication inputRegisterAuthentication);
     }
 }

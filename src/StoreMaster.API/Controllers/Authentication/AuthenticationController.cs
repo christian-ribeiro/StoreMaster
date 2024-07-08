@@ -12,12 +12,25 @@ namespace StoreMaster.API.Controllers.Authentication
     {
         private readonly IAuthenticationService _authenticationService = authenticationService;
 
-        [HttpPost("SignIn")]
-        public ActionResult<OutputAuthenticationUser> SignIn([FromBody] InputAuthenticationUser inputAuthenticationUser)
+        [HttpPost("Login")]
+        public ActionResult<OutputAuthentication> Login([FromBody] InputAuthentication inputAuthentication)
         {
             try
             {
-                return Ok(_authenticationService.SignIn(inputAuthenticationUser));
+                return Ok(_authenticationService.Login(inputAuthentication));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpPost("RefreshToken")]
+        public ActionResult<OutputAuthentication> RefreshToken([FromBody] InputRefreshTokenAuthentication inputRefreshTokenAuthentication)
+        {
+            try
+            {
+                return Ok(_authenticationService.RefreshToken(inputRefreshTokenAuthentication));
             }
             catch (Exception ex)
             {
@@ -26,12 +39,12 @@ namespace StoreMaster.API.Controllers.Authentication
         }
 
         [HttpPost("Register")]
-        public ActionResult<long> Register([FromHeader] Guid publicKey, [FromHeader] Guid secretKey, [FromBody] InputRegisterAuthenticationUser inputRegisterAuthenticationUser)
+        public ActionResult<long> Register([FromHeader] Guid publicKey, [FromHeader] Guid secretKey, [FromBody] InputRegisterAuthentication inputRegisterAuthentication)
         {
             try
             {
                 if (publicKey == new Guid("14e1428c-7c01-4eb6-8054-20611c114229") && secretKey == new Guid("a395b1a2-31bc-4d78-9f07-63bdcd37a54b"))
-                    return Ok(_authenticationService.Register(inputRegisterAuthenticationUser));
+                    return Ok(_authenticationService.Register(inputRegisterAuthentication));
                 else
                     return Unauthorized();
             }

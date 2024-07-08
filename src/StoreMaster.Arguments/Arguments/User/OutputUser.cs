@@ -20,6 +20,7 @@ namespace StoreMaster.Arguments.Arguments
         public string Name { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
+        public string? RefreshToken { get; set; }
         public long LanguageId { get; set; }
         public long UserStatusId { get; set; }
 
@@ -32,12 +33,13 @@ namespace StoreMaster.Arguments.Arguments
 
         public OutputUser() { }
 
-        public OutputUser(string code, string name, string password, string email, long languageId, long userStatusId, OutputLanguage language, OutputUserStatus userStatus)
+        public OutputUser(string code, string name, string password, string email, string? refreshToken, long languageId, long userStatusId, OutputLanguage language, OutputUserStatus userStatus)
         {
             Code = code;
             Name = name;
             Password = password;
             Email = email;
+            RefreshToken = refreshToken;
             LanguageId = languageId;
             UserStatusId = userStatusId;
             Language = language;

@@ -9,14 +9,14 @@ namespace StoreMaster.Domain.DTO
         public static UserDTO GetDTO(OutputUser output)
         {
             return output == null ? default : new UserDTO().Load(
-                new InternalPropertiesUserDTO().SetInternalData(output.Id, output.CreationDate, output.ChangeDate, default, default),
+                new InternalPropertiesUserDTO(output.RefreshToken).SetInternalData(output.Id, output.CreationDate, output.ChangeDate, default, default),
                 new ExternalPropertiesUserDTO(output.Code, output.Name, output.Password, output.Email, output.LanguageId, output.UserStatusId),
                 new AuxiliaryPropertiesUserDTO(output.Language, output.UserStatus));
         }
 
         public static OutputUser GetOutput(UserDTO dto)
         {
-            return dto == null ? default : new OutputUser(dto.ExternalPropertiesDTO.Code, dto.ExternalPropertiesDTO.Name, dto.ExternalPropertiesDTO.Password, dto.ExternalPropertiesDTO.Email, dto.ExternalPropertiesDTO.LanguageId, dto.ExternalPropertiesDTO.UserStatusId, dto.AuxiliaryPropertiesDTO.Language, dto.AuxiliaryPropertiesDTO.UserStatus)
+            return dto == null ? default : new OutputUser(dto.ExternalPropertiesDTO.Code, dto.ExternalPropertiesDTO.Name, dto.ExternalPropertiesDTO.Password, dto.ExternalPropertiesDTO.Email, dto.InternalPropertiesDTO.RefreshToken, dto.ExternalPropertiesDTO.LanguageId, dto.ExternalPropertiesDTO.UserStatusId, dto.AuxiliaryPropertiesDTO.Language, dto.AuxiliaryPropertiesDTO.UserStatus)
                 .SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate, default, default, default, default);
         }
 

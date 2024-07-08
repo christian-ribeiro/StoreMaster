@@ -38,6 +38,8 @@ namespace StoreMaster.Infrastructure.Persistence.Mapping
             builder.Property(x => x.Email).HasMaxLength(150);
             builder.Property(x => x.Email).IsRequired();
 
+            builder.Property(x => x.RefreshToken).HasColumnName("atualizacao_token");
+
             builder.Property(x => x.LanguageId).HasColumnName("id_idioma");
             builder.Property(x => x.LanguageId).IsRequired();
 
