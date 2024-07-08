@@ -8,6 +8,8 @@ namespace StoreMaster.Infrastructure.Persistence.Mapping
     {
         public void Configure(EntityTypeBuilder<StockConfiguration> builder)
         {
+            builder.HasOne(x => x.CreationUser).WithMany(x => x.ListCreationUserStockConfiguration).HasForeignKey(x => x.CreationUserId);
+            builder.HasOne(x => x.ChangeUser).WithMany(x => x.ListChangeUserStockConfiguration).HasForeignKey(x => x.ChangeUserId);
             builder.HasOne(x => x.Product).WithOne(x => x.StockConfiguration).HasForeignKey<StockConfiguration>(x => x.ProductId).OnDelete(DeleteBehavior.Cascade);
 
             builder.ToTable("configuracao_estoque");
@@ -18,6 +20,11 @@ namespace StoreMaster.Infrastructure.Persistence.Mapping
             builder.Property(x => x.CreationDate).IsRequired();
 
             builder.Property(x => x.ChangeDate).HasColumnName("data_alteracao");
+
+            builder.Property(x => x.CreationUserId).HasColumnName("id_usuario_criacao");
+            builder.Property(x => x.CreationUserId).IsRequired();
+
+            builder.Property(x => x.ChangeUserId).HasColumnName("id_usuario_alteracao");
 
             builder.Property(x => x.MinimumStockAmount).HasColumnName("quantidade_minima_estoque");
 

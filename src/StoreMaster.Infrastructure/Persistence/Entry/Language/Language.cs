@@ -35,7 +35,7 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         public Language GetEntry(LanguageDTO dto)
         {
             return dto == null ? default : new Language(dto.InternalPropertiesDTO.Code, dto.InternalPropertiesDTO.Description)
-                .SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+                .SetInternalData(dto.InternalPropertiesDTO.Id);
         }
 
         public static implicit operator LanguageDTO(Language language)

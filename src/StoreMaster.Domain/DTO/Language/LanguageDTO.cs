@@ -9,7 +9,7 @@ namespace StoreMaster.Domain.DTO
         public static LanguageDTO GetDTO(OutputLanguage output)
         {
             return output == null ? default : new LanguageDTO().Load(
-                new InternalPropertiesLanguageDTO(output.Code, output.Description).SetInternalData(output.Id, output.CreationDate, output.ChangeDate),
+                new InternalPropertiesLanguageDTO(output.Code, output.Description).SetInternalData(output.Id),
                 default,
                 new AuxiliaryPropertiesLanguageDTO());
         }
@@ -17,7 +17,7 @@ namespace StoreMaster.Domain.DTO
         public static OutputLanguage GetOutput(LanguageDTO dto)
         {
             return dto == null ? default : new OutputLanguage(dto.InternalPropertiesDTO.Code, dto.InternalPropertiesDTO.Description)
-                .SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+                .SetInternalData(dto.InternalPropertiesDTO.Id);
         }
 
         public static implicit operator LanguageDTO(OutputLanguage output)

@@ -28,15 +28,17 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         public static StockMovementDTO GetDTO(StockMovement stockMovement)
         {
             return stockMovement == null ? default : new StockMovementDTO().Load(
-                    new InternalPropertiesStockMovementDTO().SetInternalData(stockMovement.Id, stockMovement.CreationDate, stockMovement.ChangeDate),
+                    new InternalPropertiesStockMovementDTO().SetInternalData(stockMovement.Id).SetInternalDataCreate(stockMovement.CreationDate, stockMovement.CreationUserId),
                     new ExternalPropertiesStockMovementDTO(stockMovement.ProductId, stockMovement.StockMovementTypeId),
-                    new AuxiliaryPropertiesStockMovementDTO(stockMovement.Product, stockMovement.StockMovementType)
+                    new AuxiliaryPropertiesStockMovementDTO(stockMovement.Product, stockMovement.StockMovementType).SetInternalDataCreate(stockMovement.CreationUser)
                 );
         }
 
         public static StockMovement GetEntry(StockMovementDTO dto)
         {
-            return dto == null ? default : new StockMovement(dto.ExternalPropertiesDTO.ProductId, dto.ExternalPropertiesDTO.StockMovementTypeId, dto.AuxiliaryPropertiesDTO.StockMovementType).SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+            return dto == null ? default : new StockMovement(dto.ExternalPropertiesDTO.ProductId, dto.ExternalPropertiesDTO.StockMovementTypeId, dto.AuxiliaryPropertiesDTO.StockMovementType)
+                .SetInternalData(dto.InternalPropertiesDTO.Id)
+                .SetInternalDataCreate(dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.CreationUserId, dto.AuxiliaryPropertiesDTO.CreationUser);
         }
 
         public static implicit operator StockMovementDTO(StockMovement stockmovement)

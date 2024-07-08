@@ -10,15 +10,15 @@ namespace StoreMaster.Domain.DTO
         public static StockMovementTypeDTO GetDTO(OutputStockMovementType output)
         {
             return output == null ? default : new StockMovementTypeDTO().Load(
-                new InternalPropertiesStockMovementTypeDTO(output.Code, output.Description).SetInternalData(output.Id, output.CreationDate, output.ChangeDate),
+                new InternalPropertiesStockMovementTypeDTO(output.Code, output.Description).SetInternalData(output.Id, output.CreationDate, output.ChangeDate, output.CreationUserId, default),
                 default,
-                new AuxiliaryPropertiesStockMovementTypeDTO());
+                new AuxiliaryPropertiesStockMovementTypeDTO().SetInternalData(output.CreationUser, default));
         }
 
         public static OutputStockMovementType GetOutput(StockMovementTypeDTO dto)
         {
             return dto == null ? default : new OutputStockMovementType(dto.InternalPropertiesDTO.Code, dto.InternalPropertiesDTO.Description)
-                .SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+                .SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate, dto.InternalPropertiesDTO.CreationUserId, default, dto.AuxiliaryPropertiesDTO.CreationUser, default);
         }
 
         public static implicit operator StockMovementTypeDTO(OutputStockMovementType output)

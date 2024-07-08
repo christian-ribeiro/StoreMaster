@@ -26,7 +26,7 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         public static UserStatusDTO GetDTO(UserStatus userStatus)
         {
             return userStatus == null ? default : new UserStatusDTO().Load(
-                    new InternalPropertiesUserStatusDTO(userStatus.Code, userStatus.Description).SetInternalData(userStatus.Id, userStatus.CreationDate, userStatus.ChangeDate),
+                    new InternalPropertiesUserStatusDTO(userStatus.Code, userStatus.Description).SetInternalData(userStatus.Id),
                     default,
                     new AuxiliaryPropertiesUserStatusDTO()
                 );
@@ -35,7 +35,7 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         public static UserStatus GetEntry(UserStatusDTO dto)
         {
             return dto == null ? default : new UserStatus(dto.InternalPropertiesDTO.Code, dto.InternalPropertiesDTO.Description)
-                .SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+                .SetInternalData(dto.InternalPropertiesDTO.Id);
         }
 
         public static implicit operator UserStatusDTO(UserStatus userstatus)

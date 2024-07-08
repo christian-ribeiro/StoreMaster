@@ -9,14 +9,16 @@ namespace StoreMaster.Domain.DTO
         public static StockMovementDTO GetDTO(OutputStockMovement output)
         {
             return output == null ? default : new StockMovementDTO().Load(
-                new InternalPropertiesStockMovementDTO().SetInternalData(output.Id, output.CreationDate, output.ChangeDate),
+                new InternalPropertiesStockMovementDTO().SetInternalData(output.Id).SetInternalDataCreate(output.CreationDate, output.CreationUserId),
                 new ExternalPropertiesStockMovementDTO(output.ProductId, output.StockMovementTypeId),
-                new AuxiliaryPropertiesStockMovementDTO(output.Product, output.StockMovementType));
+                new AuxiliaryPropertiesStockMovementDTO(output.Product, output.StockMovementType).SetInternalDataCreate(output.CreationUser));
         }
 
         public static OutputStockMovement GetOutput(StockMovementDTO dto)
         {
-            return dto == null ? default : new OutputStockMovement(dto.ExternalPropertiesDTO.ProductId, dto.ExternalPropertiesDTO.StockMovementTypeId, dto.AuxiliaryPropertiesDTO.Product, dto.AuxiliaryPropertiesDTO.StockMovementType).SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+            return dto == null ? default : new OutputStockMovement(dto.ExternalPropertiesDTO.ProductId, dto.ExternalPropertiesDTO.StockMovementTypeId, dto.AuxiliaryPropertiesDTO.Product, dto.AuxiliaryPropertiesDTO.StockMovementType)
+                .SetInternalData(dto.InternalPropertiesDTO.Id)
+                .SetInternalDataCreate(dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.CreationUserId, dto.AuxiliaryPropertiesDTO.CreationUser);
         }
 
         public static implicit operator StockMovementDTO(OutputStockMovement output)

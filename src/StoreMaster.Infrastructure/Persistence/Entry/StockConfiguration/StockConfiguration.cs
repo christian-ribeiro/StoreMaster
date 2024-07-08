@@ -23,17 +23,18 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         }
 
 #nullable disable
-        public static StockConfigurationDTO GetDTO(StockConfiguration stockconfiguration)
+        public static StockConfigurationDTO GetDTO(StockConfiguration stockConfiguration)
         {
-            return stockconfiguration == null ? default : new StockConfigurationDTO().Load(
-                    new InternalPropertiesStockConfigurationDTO().SetInternalData(stockconfiguration.Id, stockconfiguration.CreationDate, stockconfiguration.ChangeDate),
-                    new ExternalPropertiesStockConfigurationDTO(stockconfiguration.MinimumStockAmount, stockconfiguration.ProductId),
-                    new AuxiliaryPropertiesStockConfigurationDTO());
+            return stockConfiguration == null ? default : new StockConfigurationDTO().Load(
+                    new InternalPropertiesStockConfigurationDTO().SetInternalData(stockConfiguration.Id, stockConfiguration.CreationDate, stockConfiguration.ChangeDate, stockConfiguration.CreationUserId, stockConfiguration.ChangeUserId),
+                    new ExternalPropertiesStockConfigurationDTO(stockConfiguration.MinimumStockAmount, stockConfiguration.ProductId),
+                    new AuxiliaryPropertiesStockConfigurationDTO().SetInternalData(stockConfiguration.CreationUser, stockConfiguration.ChangeUser));
         }
 
         public static StockConfiguration GetEntry(StockConfigurationDTO dto)
         {
-            return dto == null ? default : new StockConfiguration(dto.ExternalPropertiesDTO.MinimumStockAmount, dto.ExternalPropertiesDTO.ProductId, dto.AuxiliaryPropertiesDTO.Product).SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+            return dto == null ? default : new StockConfiguration(dto.ExternalPropertiesDTO.MinimumStockAmount, dto.ExternalPropertiesDTO.ProductId, dto.AuxiliaryPropertiesDTO.Product)
+                .SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate, dto.InternalPropertiesDTO.CreationUserId, dto.InternalPropertiesDTO.ChangeUserId, dto.AuxiliaryPropertiesDTO.CreationUser, dto.AuxiliaryPropertiesDTO.ChangeUser);
         }
 
         public static implicit operator StockConfigurationDTO(StockConfiguration stockconfiguration)

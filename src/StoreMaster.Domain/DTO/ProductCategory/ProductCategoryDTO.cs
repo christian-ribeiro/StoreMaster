@@ -9,14 +9,15 @@ namespace StoreMaster.Domain.DTO
         public static ProductCategoryDTO GetDTO(OutputProductCategory output)
         {
             return output == null ? default : new ProductCategoryDTO().Load(
-                new InternalPropertiesProductCategoryDTO().SetInternalData(output.Id, output.CreationDate, output.ChangeDate),
+                new InternalPropertiesProductCategoryDTO().SetInternalData(output.Id, output.CreationDate, output.ChangeDate, output.CreationUserId, output.ChangeUserId),
                 new ExternalPropertiesProductCategoryDTO(output.Code, output.Description),
-                new AuxiliaryPropertiesProductCategoryDTO());
+                new AuxiliaryPropertiesProductCategoryDTO().SetInternalData(output.CreationUser, output.ChangeUser));
         }
 
         public static OutputProductCategory GetOutput(ProductCategoryDTO dto)
         {
-            return dto == null ? default : new OutputProductCategory(dto.ExternalPropertiesDTO.Code, dto.ExternalPropertiesDTO.Description).SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+            return dto == null ? default : new OutputProductCategory(dto.ExternalPropertiesDTO.Code, dto.ExternalPropertiesDTO.Description)
+                .SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate, dto.InternalPropertiesDTO.CreationUserId, dto.InternalPropertiesDTO.ChangeUserId, dto.AuxiliaryPropertiesDTO.CreationUser, dto.AuxiliaryPropertiesDTO.ChangeUser);
         }
 
         public static implicit operator ProductCategoryDTO(OutputProductCategory output)

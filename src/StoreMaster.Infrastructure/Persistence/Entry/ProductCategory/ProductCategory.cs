@@ -25,15 +25,15 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         public static ProductCategoryDTO GetDTO(ProductCategory productCategory)
         {
             return productCategory == null ? default : new ProductCategoryDTO().Load(
-                    new InternalPropertiesProductCategoryDTO().SetInternalData(productCategory.Id, productCategory.CreationDate, productCategory.ChangeDate),
+                    new InternalPropertiesProductCategoryDTO().SetInternalData(productCategory.Id, productCategory.CreationDate, productCategory.ChangeDate, productCategory.CreationUserId, productCategory.ChangeUserId),
                     new ExternalPropertiesProductCategoryDTO(productCategory.Code, productCategory.Description),
-                    new AuxiliaryPropertiesProductCategoryDTO()
-                );
+                    new AuxiliaryPropertiesProductCategoryDTO().SetInternalData(productCategory.CreationUser, productCategory.ChangeUser));
         }
 
         public static ProductCategory GetEntry(ProductCategoryDTO dto)
         {
-            return dto == null ? default : new ProductCategory(dto.ExternalPropertiesDTO.Code, dto.ExternalPropertiesDTO.Description).SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+            return dto == null ? default : new ProductCategory(dto.ExternalPropertiesDTO.Code, dto.ExternalPropertiesDTO.Description)
+                .SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate, dto.InternalPropertiesDTO.CreationUserId, dto.InternalPropertiesDTO.ChangeUserId, dto.AuxiliaryPropertiesDTO.CreationUser, dto.AuxiliaryPropertiesDTO.ChangeUser);
         }
 
         public static implicit operator ProductCategoryDTO(ProductCategory productcategory)

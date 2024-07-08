@@ -28,7 +28,8 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         public static StockMovementTypeDTO GetDTO(StockMovementType stockMovementType)
         {
             return stockMovementType == null ? default : new StockMovementTypeDTO().Load(
-                    new InternalPropertiesStockMovementTypeDTO(stockMovementType.Code, stockMovementType.Description).SetInternalData(stockMovementType.Id, stockMovementType.CreationDate, stockMovementType.ChangeDate),
+                    new InternalPropertiesStockMovementTypeDTO(stockMovementType.Code, stockMovementType.Description)
+                    .SetInternalData(stockMovementType.Id),
                     default,
                     new AuxiliaryPropertiesStockMovementTypeDTO()
                 );
@@ -37,7 +38,7 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         public static StockMovementType GetEntry(StockMovementTypeDTO dto)
         {
             return dto == null ? default : new StockMovementType(dto.InternalPropertiesDTO.Code, dto.InternalPropertiesDTO.Description)
-                .SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+                .SetInternalData(dto.InternalPropertiesDTO.Id);
         }
 
         public static implicit operator StockMovementTypeDTO(StockMovementType stockmovementtype)

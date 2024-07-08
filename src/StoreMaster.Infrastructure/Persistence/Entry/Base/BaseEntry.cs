@@ -9,6 +9,19 @@ namespace StoreMaster.Infrastructure.Persistence.Entry.Base
         public virtual DateTime CreationDate { get; set; }
         [NotMapped]
         public virtual DateTime? ChangeDate { get; set; }
+        [NotMapped]
+        public long CreationUserId { get; private set; }
+        [NotMapped]
+        public long? ChangeUserId { get; private set; }
+
+        #region Virtual Properties
+        #region Internal
+        [NotMapped]
+        public virtual User? CreationUser { get; private set; }
+        [NotMapped]
+        public virtual User? ChangeUser { get; private set; }
+        #endregion
+        #endregion
 
         public TEntry SetCreateData()
         {
@@ -22,11 +35,31 @@ namespace StoreMaster.Infrastructure.Persistence.Entry.Base
             return (TEntry)this;
         }
 
-        public TEntry SetInternalData(long id, DateTime creationDate, DateTime? changeDate)
+        public TEntry SetInternalData(long id, DateTime creationDate, DateTime? changeDate, long creationUserId, long? changeUserId, User? creationUser, User? changeUser)
         {
             Id = id;
             CreationDate = creationDate;
             ChangeDate = changeDate;
+            CreationUserId = creationUserId;
+            ChangeUserId = changeUserId;
+            CreationUser = creationUser;
+            ChangeUser = changeUser;
+            return (TEntry)this;
+        }
+
+        public TEntry SetInternalDataCreate(DateTime creationDate, long creationUserId, User? creationUser)
+        {
+            CreationDate = creationDate;
+            CreationUserId = creationUserId;
+            CreationUser = creationUser;
+            return (TEntry)this;
+        }
+
+        public TEntry SetInternalDataChange(DateTime? changeDate, long? changeUserId, User? changeUser)
+        {
+            ChangeDate = changeDate;
+            ChangeUserId = changeUserId;
+            ChangeUser = changeUser;
             return (TEntry)this;
         }
 

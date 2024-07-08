@@ -9,7 +9,7 @@ namespace StoreMaster.Domain.DTO
         public static UserStatusDTO GetDTO(OutputUserStatus output)
         {
             return output == null ? default : new UserStatusDTO().Load(
-                new InternalPropertiesUserStatusDTO(output.Code, output.Description).SetInternalData(output.Id, output.CreationDate, output.ChangeDate),
+                new InternalPropertiesUserStatusDTO(output.Code, output.Description).SetInternalData(output.Id),
                 default,
                 new AuxiliaryPropertiesUserStatusDTO());
         }
@@ -17,7 +17,7 @@ namespace StoreMaster.Domain.DTO
         public static OutputUserStatus GetOutput(UserStatusDTO dto)
         {
             return dto == null ? default : new OutputUserStatus(dto.InternalPropertiesDTO.Code, dto.InternalPropertiesDTO.Description)
-                .SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+                .SetInternalData(dto.InternalPropertiesDTO.Id);
         }
 
         public static implicit operator UserStatusDTO(OutputUserStatus output)

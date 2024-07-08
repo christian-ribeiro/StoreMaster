@@ -8,6 +8,10 @@ namespace StoreMaster.Arguments.Arguments
         #region Ignore
         [JsonIgnore]
         public override DateTime? ChangeDate { get => base.ChangeDate; set => base.ChangeDate = value; }
+        [JsonIgnore]
+        public override long? ChangeUserId { get => base.ChangeUserId; set => base.ChangeUserId = value; }
+        [JsonIgnore]
+        public override OutputUser ChangeUser { get => base.ChangeUser; set => base.ChangeUser = value; }
         #endregion
 
         public long ProductId { get; set; }

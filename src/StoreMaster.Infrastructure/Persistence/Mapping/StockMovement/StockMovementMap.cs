@@ -8,6 +8,7 @@ namespace StoreMaster.Infrastructure.Persistence.Mapping
     {
         public void Configure(EntityTypeBuilder<StockMovement> builder)
         {
+            builder.HasOne(x => x.CreationUser).WithMany(x => x.ListCreationUserStockMovement).HasForeignKey(x => x.CreationUserId);
             builder.HasOne(x => x.StockMovementType).WithMany(x => x.ListStockMovement).HasForeignKey(x => x.StockMovementTypeId);
             builder.HasOne(x => x.Product).WithMany(x => x.ListStockMovement).HasForeignKey(x => x.ProductId).OnDelete(DeleteBehavior.Cascade);
 
@@ -17,6 +18,9 @@ namespace StoreMaster.Infrastructure.Persistence.Mapping
 
             builder.Property(x => x.CreationDate).HasColumnName("data_criacao");
             builder.Property(x => x.CreationDate).IsRequired();
+
+            builder.Property(x => x.CreationUserId).HasColumnName("id_usuario_criacao");
+            builder.Property(x => x.CreationUserId).IsRequired();
 
             builder.Property(x => x.StockMovementTypeId).HasColumnName("id_tipo_movimento_estoque");
             builder.Property(x => x.StockMovementTypeId).IsRequired();
