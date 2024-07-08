@@ -14,6 +14,12 @@
             return (TInternalPropertiesDTO)this;
         }
 
+        public TInternalPropertiesDTO SetInternalData(long id)
+        {
+            Id = id;
+            return (TInternalPropertiesDTO)this;
+        }
+
         public TInternalPropertiesDTO SetCreateData()
         {
             CreationDate = DateTime.Now;

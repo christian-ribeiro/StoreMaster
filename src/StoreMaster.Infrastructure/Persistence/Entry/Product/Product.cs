@@ -14,14 +14,14 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         public virtual ProductCategory? ProductCategory { get; private set; }
         #endregion
         #region External
-        public virtual StockConfiguration StockConfiguration { get; private set; }
+        public virtual StockConfiguration? StockConfiguration { get; private set; }
         public virtual List<StockMovement> ListStockMovement { get; private set; }
         #endregion
         #endregion
 
         public Product() { }
 
-        public Product(string description, long productCategoryId, ProductCategory? productCategory, StockConfiguration stockConfiguration, List<StockMovement> listStockMovement)
+        public Product(string description, long productCategoryId, ProductCategory? productCategory, StockConfiguration? stockConfiguration, List<StockMovement> listStockMovement)
         {
             Description = description;
             ProductCategoryId = productCategoryId;
