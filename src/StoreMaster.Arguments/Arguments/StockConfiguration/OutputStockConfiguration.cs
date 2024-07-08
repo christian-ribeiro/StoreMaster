@@ -12,6 +12,7 @@ namespace StoreMaster.Arguments.Arguments
         public OutputProduct Product { get; set; }
         #endregion
         #endregion
+
         public OutputStockConfiguration() { }
 
         public OutputStockConfiguration(decimal minimumStockAmount, long productId, OutputProduct product)

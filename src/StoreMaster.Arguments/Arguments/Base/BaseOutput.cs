@@ -30,14 +30,6 @@
             return (TOutput)this;
         }
 
-        public TOutput SetInternalDataChange(DateTime? changeDate, long? changeUserId, OutputUser changeUser)
-        {
-            ChangeDate = changeDate;
-            ChangeUserId = changeUserId;
-            ChangeUser = changeUser;
-            return (TOutput)this;
-        }
-
         public TOutput SetInternalData(long id)
         {
             Id = id;

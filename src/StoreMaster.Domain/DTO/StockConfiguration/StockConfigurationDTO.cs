@@ -11,7 +11,7 @@ namespace StoreMaster.Domain.DTO
             return output == null ? default : new StockConfigurationDTO().Load(
                 new InternalPropertiesStockConfigurationDTO().SetInternalData(output.Id, output.CreationDate, output.ChangeDate, output.CreationUserId, output.ChangeUserId),
                 new ExternalPropertiesStockConfigurationDTO(output.MinimumStockAmount, output.ProductId),
-                new AuxiliaryPropertiesStockConfigurationDTO().SetInternalData(output.CreationUser, output.ChangeUser));
+                new AuxiliaryPropertiesStockConfigurationDTO(output.Product).SetInternalData(output.CreationUser, output.ChangeUser));
         }
 
         public static OutputStockConfiguration GetOutput(StockConfigurationDTO dto)

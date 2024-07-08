@@ -28,7 +28,7 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
             return stockConfiguration == null ? default : new StockConfigurationDTO().Load(
                     new InternalPropertiesStockConfigurationDTO().SetInternalData(stockConfiguration.Id, stockConfiguration.CreationDate, stockConfiguration.ChangeDate, stockConfiguration.CreationUserId, stockConfiguration.ChangeUserId),
                     new ExternalPropertiesStockConfigurationDTO(stockConfiguration.MinimumStockAmount, stockConfiguration.ProductId),
-                    new AuxiliaryPropertiesStockConfigurationDTO().SetInternalData(stockConfiguration.CreationUser, stockConfiguration.ChangeUser));
+                    new AuxiliaryPropertiesStockConfigurationDTO(stockConfiguration.Product).SetInternalData(stockConfiguration.CreationUser, stockConfiguration.ChangeUser));
         }
 
         public static StockConfiguration GetEntry(StockConfigurationDTO dto)
