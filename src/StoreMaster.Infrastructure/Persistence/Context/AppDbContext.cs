@@ -14,6 +14,7 @@ namespace StoreMaster.Infrastructure.Persistence.Context
         public DbSet<Language> Language { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<UserStatus> UserStatus { get; set; }
+        public DbSet<Menu> Menu { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
