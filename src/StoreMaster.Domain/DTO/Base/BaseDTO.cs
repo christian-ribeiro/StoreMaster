@@ -73,7 +73,7 @@ namespace StoreMaster.Domain.DTO.Base
             return (TDTO)this;
         }
 
-        public TDTO Create(long id, TExternalPropertiesDTO externalPropertiesDTO, TInternalPropertiesDTO internalPropertiesDTO = default(TInternalPropertiesDTO), TAuxiliaryPropertiesDTO auxiliaryPropertiesDTO = default(TAuxiliaryPropertiesDTO))
+        public TDTO Create(TExternalPropertiesDTO externalPropertiesDTO, TInternalPropertiesDTO internalPropertiesDTO = default(TInternalPropertiesDTO), TAuxiliaryPropertiesDTO auxiliaryPropertiesDTO = default(TAuxiliaryPropertiesDTO))
         {
             ExternalPropertiesDTO = externalPropertiesDTO;
             if (internalPropertiesDTO != null)
@@ -87,7 +87,7 @@ namespace StoreMaster.Domain.DTO.Base
             return (TDTO)this;
         }
 
-        public TDTO Update(TInputUpdate inputUpdate, TInternalPropertiesDTO internalPropertiesDTO = null, TAuxiliaryPropertiesDTO auxiliaryPropertiesDTO = null)
+        public TDTO Update(TInputUpdate inputUpdate, TInternalPropertiesDTO internalPropertiesDTO, TAuxiliaryPropertiesDTO auxiliaryPropertiesDTO = null)
         {
             foreach (PropertyInfo item in ExternalPropertiesDTO.GetType().GetProperties().ToList())
             {
@@ -97,8 +97,7 @@ namespace StoreMaster.Domain.DTO.Base
                     item.SetValue(ExternalPropertiesDTO, propertyValue);
             }
 
-            if (internalPropertiesDTO != null)
-                InternalPropertiesDTO = internalPropertiesDTO;
+            InternalPropertiesDTO = internalPropertiesDTO;
 
             if (auxiliaryPropertiesDTO != null)
                 AuxiliaryPropertiesDTO = auxiliaryPropertiesDTO;
@@ -108,12 +107,11 @@ namespace StoreMaster.Domain.DTO.Base
             return (TDTO)this;
         }
 
-        public TDTO Update(TExternalPropertiesDTO externalPropertiesDTO, TInternalPropertiesDTO internalPropertiesDTO = null, TAuxiliaryPropertiesDTO auxiliaryPropertiesDTO = null)
+        public TDTO Update(TExternalPropertiesDTO externalPropertiesDTO, TInternalPropertiesDTO internalPropertiesDTO, TAuxiliaryPropertiesDTO auxiliaryPropertiesDTO = null)
         {
             ExternalPropertiesDTO = externalPropertiesDTO;
 
-            if (internalPropertiesDTO != null)
-                InternalPropertiesDTO = internalPropertiesDTO;
+            InternalPropertiesDTO = internalPropertiesDTO;
 
             if (auxiliaryPropertiesDTO != null)
                 AuxiliaryPropertiesDTO = auxiliaryPropertiesDTO;
