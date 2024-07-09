@@ -10,6 +10,7 @@ namespace StoreMaster.Domain.Service
     {
         private readonly IProductRepository _productRepository = productRepository;
         private readonly IStockMovementTypeRepository _stockMovementTypeRepository = stockMovementTypeRepository;
+
         public override List<long> Create(List<InputCreateStockMovement> listInputCreateStockMovement)
         {
             List<StockMovementDTO> listStockMovementDTO = _repository.GetListByListProductId((from i in listInputCreateStockMovement select i.ProductId).ToList());
@@ -32,7 +33,7 @@ namespace StoreMaster.Domain.Service
             return _repository.Create(listCreate);
         }
 
-        int GetNextSequence(long productId, Dictionary<long, int> maxSequenceByProduct, Dictionary<long, int> currentSequenceByProduct)
+        private static int GetNextSequence(long productId, Dictionary<long, int> maxSequenceByProduct, Dictionary<long, int> currentSequenceByProduct)
         {
             if (!currentSequenceByProduct.ContainsKey(productId))
                 currentSequenceByProduct[productId] = maxSequenceByProduct.ContainsKey(productId) ? maxSequenceByProduct[productId] + 1 : 1;
