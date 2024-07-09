@@ -21,7 +21,6 @@ namespace StoreMaster.Infrastructure.Persistence.Repository
         where TInternalPropertiesDTO : BaseInternalPropertiesDTO<TInternalPropertiesDTO>, new()
         where TExternalPropertiesDTO : BaseExternalPropertiesDTO<TExternalPropertiesDTO>, new()
         where TAuxiliaryPropertiesDTO : BaseAuxiliaryPropertiesDTO<TAuxiliaryPropertiesDTO>, new()
-
     {
         protected readonly AppDbContext _context = context;
         protected DbSet<TEntry> _dbSet = context.Set<TEntry>();

@@ -14,6 +14,8 @@ namespace StoreMaster.Arguments.Arguments
         public override OutputUser ChangeUser { get => base.ChangeUser; set => base.ChangeUser = value; }
         #endregion
 
+        public int Sequence { get; set; }
+        public decimal Quantity { get; set; }
         public long ProductId { get; set; }
         public long StockMovementTypeId { get; set; }
 
@@ -26,8 +28,10 @@ namespace StoreMaster.Arguments.Arguments
 
         public OutputStockMovement() { }
 
-        public OutputStockMovement(long productId, long stockMovementTypeId, OutputProduct product, OutputStockMovementType stockMovementType)
+        public OutputStockMovement(int sequence, decimal quantity, long productId, long stockMovementTypeId, OutputProduct product, OutputStockMovementType stockMovementType)
         {
+            Sequence = sequence;
+            Quantity = quantity;
             ProductId = productId;
             StockMovementTypeId = stockMovementTypeId;
             StockMovementType = stockMovementType;

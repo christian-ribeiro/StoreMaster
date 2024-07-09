@@ -22,6 +22,12 @@ namespace StoreMaster.Infrastructure.Persistence.Mapping
             builder.Property(x => x.CreationUserId).HasColumnName("id_usuario_criacao");
             builder.Property(x => x.CreationUserId).IsRequired();
 
+            builder.Property(x => x.Sequence).HasColumnName("sequencia");
+            builder.Property(x => x.Sequence).IsRequired();
+
+            builder.Property(x => x.Quantity).HasColumnName("quantidade");
+            builder.Property(x => x.Quantity).IsRequired();
+
             builder.Property(x => x.StockMovementTypeId).HasColumnName("id_tipo_movimento_estoque");
             builder.Property(x => x.StockMovementTypeId).IsRequired();
 

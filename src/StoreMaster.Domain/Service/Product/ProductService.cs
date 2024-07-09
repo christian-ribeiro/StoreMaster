@@ -6,9 +6,11 @@ using StoreMaster.Domain.Service.Base;
 
 namespace StoreMaster.Domain.Service
 {
-    public class ProductService(IProductRepository repository, IProductCategoryRepository productCategoryRepository) : BaseService<IProductRepository, OutputProduct, InputIdentifierProduct, InputCreateProduct, InputUpdateProduct, InputIdentityUpdateProduct, InputIdentityDeleteProduct, ProductDTO, InternalPropertiesProductDTO, ExternalPropertiesProductDTO, AuxiliaryPropertiesProductDTO>(repository), IProductService
+    public class ProductService(IProductRepository repository, IProductCategoryRepository productCategoryRepository, IStockMovementRepository stockMovementRepository, IStockConfigurationRepository stockConfigurationRepository) : BaseService<IProductRepository, OutputProduct, InputIdentifierProduct, InputCreateProduct, InputUpdateProduct, InputIdentityUpdateProduct, InputIdentityDeleteProduct, ProductDTO, InternalPropertiesProductDTO, ExternalPropertiesProductDTO, AuxiliaryPropertiesProductDTO>(repository), IProductService
     {
         private readonly IProductCategoryRepository _productCategoryRepository = productCategoryRepository;
+        private readonly IStockMovementRepository _stockMovementRepository = stockMovementRepository;
+        private readonly IStockConfigurationRepository _stockConfigurationRepository = stockConfigurationRepository;
 
         public override List<long> Create(List<InputCreateProduct> listInputCreateProduct)
         {
@@ -43,6 +45,21 @@ namespace StoreMaster.Domain.Service
         {
             List<ProductDTO> listOriginalProductDTO = _repository.GetListByListId((from i in listInputIdentityDeleteProduct select i.Id).ToList());
             return _repository.Delete(listOriginalProductDTO);
+        }
+
+        public List<OutputProductStock> GetListProductStockByProductCategoryId(long productCategoryId)
+        {
+            List<ProductDTO> listProductDTO = _repository.GetListByProductCategoryId(productCategoryId);
+            List<StockMovementDTO> listStockMovementDTO = _stockMovementRepository.GetListByListProductId((from i in listProductDTO select i.InternalPropertiesDTO.Id).ToList());
+            List<StockConfigurationDTO> listStockConfigurationDTO = _stockConfigurationRepository.GetListByListIdentifier((from i in listProductDTO select new InputIdentifierStockConfiguration(i.InternalPropertiesDTO.Id)).ToList());
+
+            List<OutputProductStock> listProductStock = (from i in listProductDTO
+                                                         let stockConfiguration = (from j in listStockConfigurationDTO where j.ExternalPropertiesDTO.ProductId == i.InternalPropertiesDTO.Id select j).FirstOrDefault()
+                                                         let listCurrentStockMovementDTO = (from j in listStockMovementDTO where j.ExternalPropertiesDTO.ProductId == i.InternalPropertiesDTO.Id select j).ToList()
+                                                         let currentStock = listCurrentStockMovementDTO.Sum(x => x.ExternalPropertiesDTO.StockMovementTypeId == 1 ? x.ExternalPropertiesDTO.Quantity : -x.ExternalPropertiesDTO.Quantity)
+                                                         select new OutputProductStock(currentStock, stockConfiguration?.ExternalPropertiesDTO?.MinimumStockAmount ?? 0, i)).ToList();
+
+            return listProductStock;
         }
     }
 }

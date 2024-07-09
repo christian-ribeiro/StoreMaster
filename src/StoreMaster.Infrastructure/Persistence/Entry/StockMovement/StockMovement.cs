@@ -6,6 +6,8 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
 {
     public class StockMovement : BaseEntry<StockMovement>
     {
+        public int Sequence { get; private set; }
+        public decimal Quantity { get; private set; }
         public long ProductId { get; private set; }
         public long StockMovementTypeId { get; private set; }
 
@@ -28,10 +30,13 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
 
         public StockMovement() { }
 
-        public StockMovement(long productId, long stockMovementTypeId, StockMovementType stockMovementType)
+        public StockMovement(int sequence, decimal quantity, long productId, long stockMovementTypeId, Product product, StockMovementType stockMovementType)
         {
+            Sequence = sequence;
+            Quantity = quantity;
             ProductId = productId;
             StockMovementTypeId = stockMovementTypeId;
+            Product = product;
             StockMovementType = stockMovementType;
         }
 
@@ -39,15 +44,15 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         public static StockMovementDTO GetDTO(StockMovement stockMovement)
         {
             return stockMovement == null ? default : new StockMovementDTO().Load(
-                    new InternalPropertiesStockMovementDTO().SetInternalData(stockMovement.Id).SetInternalDataCreate(stockMovement.CreationDate, stockMovement.CreationUserId),
-                    new ExternalPropertiesStockMovementDTO(stockMovement.ProductId, stockMovement.StockMovementTypeId),
+                    new InternalPropertiesStockMovementDTO(stockMovement.Sequence).SetInternalData(stockMovement.Id).SetInternalDataCreate(stockMovement.CreationDate, stockMovement.CreationUserId),
+                    new ExternalPropertiesStockMovementDTO(stockMovement.Quantity, stockMovement.ProductId, stockMovement.StockMovementTypeId),
                     new AuxiliaryPropertiesStockMovementDTO(stockMovement.Product, stockMovement.StockMovementType).SetInternalDataCreate(stockMovement.CreationUser)
                 );
         }
 
         public static StockMovement GetEntry(StockMovementDTO dto)
         {
-            return dto == null ? default : new StockMovement(dto.ExternalPropertiesDTO.ProductId, dto.ExternalPropertiesDTO.StockMovementTypeId, dto.AuxiliaryPropertiesDTO.StockMovementType)
+            return dto == null ? default : new StockMovement(dto.InternalPropertiesDTO.Sequence, dto.ExternalPropertiesDTO.Quantity, dto.ExternalPropertiesDTO.ProductId, dto.ExternalPropertiesDTO.StockMovementTypeId, dto.AuxiliaryPropertiesDTO.Product, dto.AuxiliaryPropertiesDTO.StockMovementType)
                 .SetInternalData(dto.InternalPropertiesDTO.Id)
                 .SetInternalDataCreate(dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.CreationUserId, dto.AuxiliaryPropertiesDTO.CreationUser);
         }
