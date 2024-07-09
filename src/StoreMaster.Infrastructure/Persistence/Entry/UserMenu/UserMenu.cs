@@ -34,13 +34,13 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         {
             return userMenu == null ? default : new UserMenuDTO().Load(
                     new InternalPropertiesUserMenuDTO().SetInternalData(userMenu.Id, userMenu.CreationDate, userMenu.ChangeDate, userMenu.CreationUserId, userMenu.ChangeUserId),
-                    new ExternalPropertiesUserMenuDTO(),
-                    new AuxiliaryPropertiesUserMenuDTO().SetInternalData(userMenu.CreationUser, userMenu.ChangeUser));
+                    new ExternalPropertiesUserMenuDTO(userMenu.Position, userMenu.SecondPosition, userMenu.Favorite, userMenu.Visible, userMenu.MenuId),
+                    new AuxiliaryPropertiesUserMenuDTO(userMenu.Menu).SetInternalData(userMenu.CreationUser, userMenu.ChangeUser));
         }
 
         public static UserMenu GetEntry(UserMenuDTO dto)
         {
-            return dto == null ? default : new UserMenu()
+            return dto == null ? default : new UserMenu(dto.ExternalPropertiesDTO.Position, dto.ExternalPropertiesDTO.SecondPosition, dto.ExternalPropertiesDTO.Favorite, dto.ExternalPropertiesDTO.Visible, dto.ExternalPropertiesDTO.MenuId, dto.AuxiliaryPropertiesDTO.Menu)
                 .SetInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate, dto.InternalPropertiesDTO.CreationUserId, dto.InternalPropertiesDTO.ChangeUserId, dto.AuxiliaryPropertiesDTO.CreationUser, dto.AuxiliaryPropertiesDTO.ChangeUser);
         }
 
