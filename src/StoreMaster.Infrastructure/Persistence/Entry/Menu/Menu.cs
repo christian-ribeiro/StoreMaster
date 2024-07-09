@@ -28,6 +28,13 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         public override User? ChangeUser => base.ChangeUser;
         #endregion
 
+        #region Virtual Properties
+        #region External
+        [NotMapped]
+        public virtual List<UserMenu> ListUserMenu { get; private set; }
+        #endregion
+        #endregion
+
         public Menu() { }
 
         public Menu(string path, string label, int position, bool visible, string? toolTip, long? parentId)

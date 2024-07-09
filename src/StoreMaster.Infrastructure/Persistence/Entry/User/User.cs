@@ -53,6 +53,12 @@ namespace StoreMaster.Infrastructure.Persistence.Entry
         [NotMapped]
         public virtual List<StockMovement> ListCreationUserStockMovement { get; private set; }
         #endregion
+        #region UserMenu
+        [NotMapped]
+        public virtual List<UserMenu> ListCreationUserUserMenu { get; private set; }
+        [NotMapped]
+        public virtual List<UserMenu> ListChangeUserUserMenu { get; private set; }
+        #endregion
         #endregion
         #endregion
 
