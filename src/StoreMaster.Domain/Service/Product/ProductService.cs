@@ -47,17 +47,17 @@ namespace StoreMaster.Domain.Service
             return _repository.Delete(listOriginalProductDTO);
         }
 
-        public List<OutputProductStock> GetListProductStockByProductCategoryId(long productCategoryId)
+        public List<OutputProductBalance> GetListProductBalance(long productCategoryId)
         {
             List<ProductDTO> listProductDTO = _repository.GetListByProductCategoryId(productCategoryId);
             List<StockMovementDTO> listStockMovementDTO = _stockMovementRepository.GetListByListProductId((from i in listProductDTO select i.InternalPropertiesDTO.Id).ToList());
             List<StockConfigurationDTO> listStockConfigurationDTO = _stockConfigurationRepository.GetListByListIdentifier((from i in listProductDTO select new InputIdentifierStockConfiguration(i.InternalPropertiesDTO.Id)).ToList());
 
-            List<OutputProductStock> listProductStock = (from i in listProductDTO
+            List<OutputProductBalance> listProductStock = (from i in listProductDTO
                                                          let stockConfiguration = (from j in listStockConfigurationDTO where j.ExternalPropertiesDTO.ProductId == i.InternalPropertiesDTO.Id select j).FirstOrDefault()
                                                          let listCurrentStockMovementDTO = (from j in listStockMovementDTO where j.ExternalPropertiesDTO.ProductId == i.InternalPropertiesDTO.Id select j).ToList()
                                                          let currentStock = listCurrentStockMovementDTO.Sum(x => x.ExternalPropertiesDTO.StockMovementTypeId == 1 ? x.ExternalPropertiesDTO.Quantity : -x.ExternalPropertiesDTO.Quantity)
-                                                         select new OutputProductStock(currentStock, stockConfiguration?.ExternalPropertiesDTO?.MinimumStockAmount ?? 0, i)).ToList();
+                                                         select new OutputProductBalance(currentStock, stockConfiguration?.ExternalPropertiesDTO?.MinimumStockAmount ?? 0, i)).ToList();
 
             return listProductStock;
         }

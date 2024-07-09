@@ -5,6 +5,6 @@ namespace StoreMaster.Domain.Interface.Service
 {
     public interface IProductService : IBaseService<OutputProduct, InputIdentifierProduct, InputCreateProduct, InputUpdateProduct, InputIdentityUpdateProduct, InputIdentityDeleteProduct>
     {
-        List<OutputProductStock> GetListProductStockByProductCategoryId(long productCategoryId);
+        List<OutputProductBalance> GetListProductBalance(long productCategoryId);
     }
 }

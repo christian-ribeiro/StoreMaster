@@ -21,14 +21,20 @@ namespace StoreMaster.Domain.Service
                 .GroupBy(x => x.ExternalPropertiesDTO.ProductId)
                 .ToDictionary(g => g.Key, g => g.Max(x => x.InternalPropertiesDTO.Sequence));
 
+            var initialStockByProduct = listStockMovementDTO
+                .GroupBy(x => x.ExternalPropertiesDTO.ProductId)
+                .ToDictionary(g => g.Key, g => g.Sum(x => x.ExternalPropertiesDTO.StockMovementTypeId == 1 ? x.ExternalPropertiesDTO.Quantity : -x.ExternalPropertiesDTO.Quantity));
+
             var currentSequenceByProduct = new Dictionary<long, int>();
+            var currentStockByProduct = new Dictionary<long, decimal>(initialStockByProduct);
 
             var listCreate = (from i in listInputCreateStockMovement
                               let relatedProduct = (from j in listRelatedProductDTO where j.InternalPropertiesDTO.Id == i.ProductId select j).FirstOrDefault()
                               let relatedStockMovementType = (from j in listRelatedStockMovementTypeDTO where j.InternalPropertiesDTO.Id == i.StockMovementTypeId select j).FirstOrDefault()
                               where relatedProduct != null && relatedStockMovementType != null
-                              let sequence = GetNextSequence(i.ProductId, maxSequenceByProduct, currentSequenceByProduct)
-                              select new StockMovementDTO().Create(i, new InternalPropertiesStockMovementDTO(sequence))).ToList();
+                              let nextSequence = GetNextSequence(i.ProductId, maxSequenceByProduct, currentSequenceByProduct)
+                              let newBalance = GetNewBalance(i.ProductId, i.Quantity, i.StockMovementTypeId == 1, currentStockByProduct)
+                              select new StockMovementDTO().Create(i, new InternalPropertiesStockMovementDTO(nextSequence))).ToList();
 
             return _repository.Create(listCreate);
         }
@@ -41,6 +47,21 @@ namespace StoreMaster.Domain.Service
                 currentSequenceByProduct[productId]++;
 
             return currentSequenceByProduct[productId];
+        }
+
+        private static decimal GetNewBalance(long productId, decimal quantity, bool inbound, Dictionary<long, decimal> currentStockByProduct)
+        {
+            if (!currentStockByProduct.ContainsKey(productId))
+                currentStockByProduct[productId] = 0;
+
+            var newBalance = currentStockByProduct[productId] + (inbound ? quantity : -quantity);
+
+            if (newBalance < 0)
+                throw new InvalidOperationException($"Saldo insuficiente para o produto {productId}. Movimento não permitido.");
+
+            currentStockByProduct[productId] = newBalance;
+
+            return newBalance;
         }
     }
 }

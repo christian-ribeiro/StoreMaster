@@ -1,14 +1,14 @@
 ﻿namespace StoreMaster.Arguments.Arguments
 {
-    public class OutputProductStock
+    public class OutputProductBalance
     {
-        public decimal Quantity { get; private set; }
+        public decimal Balance { get; private set; }
         public decimal MinimumStockAmount { get; private set; }
         public OutputProduct OutputProduct { get; private set; }
 
-        public OutputProductStock(decimal quantity, decimal minimumStockAmount, OutputProduct outputProduct)
+        public OutputProductBalance(decimal balance, decimal minimumStockAmount, OutputProduct outputProduct)
         {
-            Quantity = quantity;
+            Balance = balance;
             OutputProduct = outputProduct;
             MinimumStockAmount = minimumStockAmount;
         }

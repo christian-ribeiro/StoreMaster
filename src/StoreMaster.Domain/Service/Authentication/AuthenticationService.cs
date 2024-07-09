@@ -33,7 +33,7 @@ namespace StoreMaster.Domain.Service
 
             _userRepository.Update(originalUserDTO);
 
-            return new OutputAuthentication(originalUserDTO.InternalPropertiesDTO.Id, originalUserDTO.ExternalPropertiesDTO.Code, originalUserDTO.ExternalPropertiesDTO.Name, originalUserDTO.ExternalPropertiesDTO.Email, token, refreshToken, originalUserDTO.AuxiliaryPropertiesDTO.Language, originalUserDTO.AuxiliaryPropertiesDTO.UserStatus);
+            return new OutputAuthentication(token, refreshToken, originalUserDTO);
         }
 
         public OutputAuthentication RefreshToken(InputRefreshTokenAuthentication inputRefreshTokenAuthentication)
@@ -56,7 +56,7 @@ namespace StoreMaster.Domain.Service
 
             _userRepository.Update(originalUserDTO);
 
-            return new OutputAuthentication(originalUserDTO.InternalPropertiesDTO.Id, originalUserDTO.ExternalPropertiesDTO.Code, originalUserDTO.ExternalPropertiesDTO.Name, originalUserDTO.ExternalPropertiesDTO.Email, token, refreshToken, originalUserDTO.AuxiliaryPropertiesDTO.Language, originalUserDTO.AuxiliaryPropertiesDTO.UserStatus);
+            return new OutputAuthentication(token, refreshToken, originalUserDTO);
         }
 
         public long Register(InputRegisterAuthentication inputRegisterAuthentication)

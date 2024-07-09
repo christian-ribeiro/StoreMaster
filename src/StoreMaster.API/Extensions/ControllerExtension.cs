@@ -4,7 +4,12 @@
     {
         public static IServiceCollection ConfigureController(this IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                    .AddJsonOptions(options =>
+                    {
+                        options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+                    });
+
             services.AddEndpointsApiExplorer();
             return services;
         }
