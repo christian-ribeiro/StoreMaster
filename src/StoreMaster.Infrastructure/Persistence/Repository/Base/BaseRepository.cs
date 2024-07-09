@@ -71,7 +71,7 @@ namespace StoreMaster.Infrastructure.Persistence.Repository
             if (!getOnlyPrincipal)
                 query = query.IncludeVirtualProperties();
 
-            return FromEntryToDTO(query.ToList());
+            return FromEntryToDTO([.. query]);
         }
 
         public List<TDTO> GetListByListId(List<long> listId, bool getOnlyPrincipal = false)
@@ -81,7 +81,7 @@ namespace StoreMaster.Infrastructure.Persistence.Repository
             if (!getOnlyPrincipal)
                 query = query.IncludeVirtualProperties();
 
-            return FromEntryToDTO(_dbSet.Where(x => listId.Contains(x.Id)).IncludeVirtualProperties().AsNoTracking().ToList());
+            return FromEntryToDTO([.. query]);
         }
 
         public TDTO GetByIdentifier(TInputIdentifier inputIdentifier, bool getOnlyPrincipal = false)
@@ -93,10 +93,8 @@ namespace StoreMaster.Infrastructure.Persistence.Repository
         {
             IQueryable<TEntry> query = _dbSet.AsNoTracking();
 
-            if (listInputIdentifier == null || !listInputIdentifier.Any())
-            {
-                return new List<TDTO>();
-            }
+            if (listInputIdentifier == null || listInputIdentifier.Count == 0)
+                return [];
 
             Expression<Func<TEntry, bool>> combinedExpression = null;
 
@@ -130,7 +128,7 @@ namespace StoreMaster.Infrastructure.Persistence.Repository
             if (!getOnlyPrincipal)
                 query = query.IncludeVirtualProperties();
 
-            return FromEntryToDTO(query.ToList());
+            return FromEntryToDTO([.. query]);
         }
 
         private static Expression<Func<T, bool>> CombineExpressions<T>(
