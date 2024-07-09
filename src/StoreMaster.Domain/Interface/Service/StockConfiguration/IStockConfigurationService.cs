@@ -3,5 +3,5 @@ using StoreMaster.Domain.Interface.Service.Base;
 
 namespace StoreMaster.Domain.Interface.Service
 {
-    public interface IStockConfigurationService : IBaseService<OutputStockConfiguration, InputIdentifierStockConfiguration, InputCreateStockConfiguration, InputUpdateStockConfiguration, InputIdentityUpdateStockConfiguration, InputIdentityDeleteStockConfiguration> { }
+    public interface IStockConfigurationService : IBaseService_1<OutputStockConfiguration, InputIdentifierStockConfiguration, InputCreateStockConfiguration, InputUpdateStockConfiguration, InputIdentityUpdateStockConfiguration, InputIdentityDeleteStockConfiguration> { }
 }

@@ -6,5 +6,5 @@ using StoreMaster.Domain.Service.Base;
 
 namespace StoreMaster.Domain.Service
 {
-    public class MenuService(IMenuRepository repository) : BaseService_2<IMenuRepository, OutputMenu, InputIdentifierMenu, MenuDTO, InternalPropertiesMenuDTO, AuxiliaryPropertiesMenuDTO>(repository), IMenuService { }
+    public class MenuService(IMenuRepository repository) : BaseService_3<IMenuRepository, OutputMenu, InputIdentifierMenu, MenuDTO, InternalPropertiesMenuDTO, AuxiliaryPropertiesMenuDTO>(repository), IMenuService { }
 }

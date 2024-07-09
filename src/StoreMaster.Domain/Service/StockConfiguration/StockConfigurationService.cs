@@ -6,7 +6,7 @@ using StoreMaster.Domain.Service.Base;
 
 namespace StoreMaster.Domain.Service
 {
-    public class StockConfigurationService(IStockConfigurationRepository repository, IProductRepository productRepository) : BaseService<IStockConfigurationRepository, OutputStockConfiguration, InputIdentifierStockConfiguration, InputCreateStockConfiguration, InputUpdateStockConfiguration, InputIdentityUpdateStockConfiguration, InputIdentityDeleteStockConfiguration, StockConfigurationDTO, InternalPropertiesStockConfigurationDTO, ExternalPropertiesStockConfigurationDTO, AuxiliaryPropertiesStockConfigurationDTO>(repository), IStockConfigurationService
+    public class StockConfigurationService(IStockConfigurationRepository repository, IProductRepository productRepository) : BaseService_1<IStockConfigurationRepository, OutputStockConfiguration, InputIdentifierStockConfiguration, InputCreateStockConfiguration, InputUpdateStockConfiguration, InputIdentityUpdateStockConfiguration, InputIdentityDeleteStockConfiguration, StockConfigurationDTO, InternalPropertiesStockConfigurationDTO, ExternalPropertiesStockConfigurationDTO, AuxiliaryPropertiesStockConfigurationDTO>(repository), IStockConfigurationService
     {
         private readonly IProductRepository _productRepository = productRepository;
 

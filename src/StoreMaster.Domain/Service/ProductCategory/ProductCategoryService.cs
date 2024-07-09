@@ -6,7 +6,7 @@ using StoreMaster.Domain.Service.Base;
 
 namespace StoreMaster.Domain.Service
 {
-    public class ProductCategoryService(IProductCategoryRepository repository) : BaseService<IProductCategoryRepository, OutputProductCategory, InputIdentifierProductCategory, InputCreateProductCategory, InputUpdateProductCategory, InputIdentityUpdateProductCategory, InputIdentityDeleteProductCategory, ProductCategoryDTO, InternalPropertiesProductCategoryDTO, ExternalPropertiesProductCategoryDTO, AuxiliaryPropertiesProductCategoryDTO>(repository), IProductCategoryService
+    public class ProductCategoryService(IProductCategoryRepository repository) : BaseService_1<IProductCategoryRepository, OutputProductCategory, InputIdentifierProductCategory, InputCreateProductCategory, InputUpdateProductCategory, InputIdentityUpdateProductCategory, InputIdentityDeleteProductCategory, ProductCategoryDTO, InternalPropertiesProductCategoryDTO, ExternalPropertiesProductCategoryDTO, AuxiliaryPropertiesProductCategoryDTO>(repository), IProductCategoryService
     {
         public override List<long> Create(List<InputCreateProductCategory> listInputCreateProductCategory)
         {

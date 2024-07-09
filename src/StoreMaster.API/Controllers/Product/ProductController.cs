@@ -5,7 +5,7 @@ using StoreMaster.Domain.Interface.Service;
 
 namespace StoreMaster.API.Controllers
 {
-    public class ProductController(IProductService service, IUserService userService) : BaseController<IProductService, OutputProduct, InputIdentifierProduct, InputCreateProduct, InputUpdateProduct, InputIdentityUpdateProduct, InputIdentityDeleteProduct>(service, userService)
+    public class ProductController(IProductService service, IUserService userService) : BaseController_1<IProductService, OutputProduct, InputIdentifierProduct, InputCreateProduct, InputUpdateProduct, InputIdentityUpdateProduct, InputIdentityDeleteProduct>(service, userService)
     {
         [HttpPost("GetListProductStockByProductCategoryId/{productCategoryId}")]
         public ActionResult<OutputAuthentication> GetListProductStockByProductCategoryId([FromRoute] long productCategoryId)

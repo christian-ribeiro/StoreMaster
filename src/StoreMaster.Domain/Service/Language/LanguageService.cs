@@ -6,7 +6,7 @@ using StoreMaster.Domain.Service.Base;
 
 namespace StoreMaster.Domain.Service
 {
-    public class LanguageService(ILanguageRepository repository) : BaseService_2<ILanguageRepository, OutputLanguage, InputIdentifierLanguage, LanguageDTO, InternalPropertiesLanguageDTO, AuxiliaryPropertiesLanguageDTO>(repository), ILanguageService
+    public class LanguageService(ILanguageRepository repository) : BaseService_3<ILanguageRepository, OutputLanguage, InputIdentifierLanguage, LanguageDTO, InternalPropertiesLanguageDTO, AuxiliaryPropertiesLanguageDTO>(repository), ILanguageService
     {
     }
 }

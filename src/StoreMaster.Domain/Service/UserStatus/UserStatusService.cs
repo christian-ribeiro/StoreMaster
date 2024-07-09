@@ -6,7 +6,5 @@ using StoreMaster.Domain.Service.Base;
 
 namespace StoreMaster.Domain.Service
 {
-    public class UserStatusService(IUserStatusRepository repository) : BaseService_2<IUserStatusRepository, OutputUserStatus, InputIdentifierUserStatus, UserStatusDTO, InternalPropertiesUserStatusDTO, AuxiliaryPropertiesUserStatusDTO>(repository), IUserStatusService
-    {
-    }
+    public class UserStatusService(IUserStatusRepository repository) : BaseService_3<IUserStatusRepository, OutputUserStatus, InputIdentifierUserStatus, UserStatusDTO, InternalPropertiesUserStatusDTO, AuxiliaryPropertiesUserStatusDTO>(repository), IUserStatusService { }
 }

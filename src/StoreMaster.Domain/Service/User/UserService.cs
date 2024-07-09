@@ -7,7 +7,7 @@ using StoreMaster.Domain.Service.Base;
 
 namespace StoreMaster.Domain.Service
 {
-    public class UserService(IUserRepository repository, ILanguageRepository languageRepository, IUserStatusRepository userStatusRepository) : BaseService<IUserRepository, OutputUser, InputIdentifierUser, InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, InputIdentityDeleteUser, UserDTO, InternalPropertiesUserDTO, ExternalPropertiesUserDTO, AuxiliaryPropertiesUserDTO>(repository), IUserService
+    public class UserService(IUserRepository repository, ILanguageRepository languageRepository, IUserStatusRepository userStatusRepository) : BaseService_1<IUserRepository, OutputUser, InputIdentifierUser, InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, InputIdentityDeleteUser, UserDTO, InternalPropertiesUserDTO, ExternalPropertiesUserDTO, AuxiliaryPropertiesUserDTO>(repository), IUserService
     {
         private readonly ILanguageRepository _languageRepository = languageRepository;
         private readonly IUserStatusRepository _userStatusRepository = userStatusRepository;

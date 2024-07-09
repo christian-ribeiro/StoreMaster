@@ -6,5 +6,5 @@ using StoreMaster.Domain.Service.Base;
 
 namespace StoreMaster.Domain.Service
 {
-    public class StockMovementTypeService(IStockMovementTypeRepository repository) : BaseService_2<IStockMovementTypeRepository, OutputStockMovementType, InputIdentifierStockMovementType, StockMovementTypeDTO, InternalPropertiesStockMovementTypeDTO, AuxiliaryPropertiesStockMovementTypeDTO>(repository), IStockMovementTypeService { }
+    public class StockMovementTypeService(IStockMovementTypeRepository repository) : BaseService_3<IStockMovementTypeRepository, OutputStockMovementType, InputIdentifierStockMovementType, StockMovementTypeDTO, InternalPropertiesStockMovementTypeDTO, AuxiliaryPropertiesStockMovementTypeDTO>(repository), IStockMovementTypeService { }
 }
