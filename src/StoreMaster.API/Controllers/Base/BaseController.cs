@@ -11,8 +11,8 @@ namespace StoreMaster.API.Controllers.Base
     [Authorize]
     [ApiController]
     [Route("/api/[controller]")]
-    public class BaseController<TService, TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputReplace, TInputIdentityDelete>(TService service, IUserService userService) : Controller
-        where TService : IBaseService<TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputReplace, TInputIdentityDelete>
+    public class BaseController_0<TService, TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputReplace, TInputIdentityDelete>(TService service, IUserService userService) : Controller
+        where TService : IBaseService_0<TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputReplace, TInputIdentityDelete>
         where TOutput : BaseOutput<TOutput>
         where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
         where TInputCreate : BaseInputCreate<TInputCreate>
@@ -168,7 +168,7 @@ namespace StoreMaster.API.Controllers.Base
         {
             try
             {
-                return default;
+                return await ResponseAsync(_service.Replace(listInputReplace));
             }
             catch (Exception ex)
             {
@@ -228,7 +228,7 @@ namespace StoreMaster.API.Controllers.Base
     }
 
     #region TInputReplace
-    public class BaseController_1<TService, TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete>(TService service, IUserService userService) : BaseController<TService, TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, BaseInputReplace_0, TInputIdentityDelete>(service, userService)
+    public class BaseController_1<TService, TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete>(TService service, IUserService userService) : BaseController_0<TService, TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, BaseInputReplace_0, TInputIdentityDelete>(service, userService)
     where TService : IBaseService_1<TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete>
     where TOutput : BaseOutput<TOutput>
     where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
@@ -246,7 +246,7 @@ namespace StoreMaster.API.Controllers.Base
     #endregion
 
     #region TInputUpdate TInputIdentityUpdate TInputReplace TInputIdentityDelete
-    public class BaseController_2<TService, TOutput, TInputIdentifier, TInputCreate>(TService service, IUserService userService) : BaseController<TService, TOutput, TInputIdentifier, TInputCreate, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputReplace_0, BaseInputIdentityDelete_0>(service, userService)
+    public class BaseController_2<TService, TOutput, TInputIdentifier, TInputCreate>(TService service, IUserService userService) : BaseController_0<TService, TOutput, TInputIdentifier, TInputCreate, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputReplace_0, BaseInputIdentityDelete_0>(service, userService)
     where TService : IBaseService_2<TOutput, TInputIdentifier, TInputCreate>
     where TOutput : BaseOutput<TOutput>
     where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
@@ -285,7 +285,7 @@ namespace StoreMaster.API.Controllers.Base
     #endregion
 
     #region TInputCreate TInputUpdate TInputIdentityUpdate TInputReplace TInputIdentityDelete
-    public class BaseController_3<TService, TOutput, TInputIdentifier>(TService service, IUserService userService) : BaseController<TService, TOutput, TInputIdentifier, BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputReplace_0, BaseInputIdentityDelete_0>(service, userService)
+    public class BaseController_3<TService, TOutput, TInputIdentifier>(TService service, IUserService userService) : BaseController_0<TService, TOutput, TInputIdentifier, BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputReplace_0, BaseInputIdentityDelete_0>(service, userService)
     where TService : IBaseService_3<TOutput, TInputIdentifier>
     where TOutput : BaseOutput<TOutput>
     where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()

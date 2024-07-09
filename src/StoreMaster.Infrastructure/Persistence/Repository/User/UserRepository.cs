@@ -6,5 +6,5 @@ using StoreMaster.Infrastructure.Persistence.Entry;
 
 namespace StoreMaster.Infrastructure.Persistence.Repository
 {
-    public class UserRepository(AppDbContext context) : BaseRepository<User, OutputUser, InputIdentifierUser, InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, InputIdentityDeleteUser, UserDTO, InternalPropertiesUserDTO, ExternalPropertiesUserDTO, AuxiliaryPropertiesUserDTO>(context), IUserRepository { }
+    public class UserRepository(AppDbContext context) : BaseRepository_1<User, OutputUser, InputIdentifierUser, InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, InputIdentityDeleteUser, UserDTO, InternalPropertiesUserDTO, ExternalPropertiesUserDTO, AuxiliaryPropertiesUserDTO>(context), IUserRepository { }
 }

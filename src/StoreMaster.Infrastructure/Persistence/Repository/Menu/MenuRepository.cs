@@ -6,5 +6,5 @@ using StoreMaster.Infrastructure.Persistence.Entry;
 
 namespace StoreMaster.Infrastructure.Persistence.Repository
 {
-    public class MenuRepository(AppDbContext context) : BaseRepository_2<Menu, OutputMenu, InputIdentifierMenu, MenuDTO, InternalPropertiesMenuDTO, AuxiliaryPropertiesMenuDTO>(context), IMenuRepository { }
+    public class MenuRepository(AppDbContext context) : BaseRepository_3<Menu, OutputMenu, InputIdentifierMenu, MenuDTO, InternalPropertiesMenuDTO, AuxiliaryPropertiesMenuDTO>(context), IMenuRepository { }
 }

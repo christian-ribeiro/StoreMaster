@@ -6,5 +6,5 @@ using StoreMaster.Infrastructure.Persistence.Entry;
 
 namespace StoreMaster.Infrastructure.Persistence.Repository
 {
-    public class StockMovementTypeRepository(AppDbContext context) : BaseRepository_2<StockMovementType, OutputStockMovementType, InputIdentifierStockMovementType, StockMovementTypeDTO, InternalPropertiesStockMovementTypeDTO, AuxiliaryPropertiesStockMovementTypeDTO>(context), IStockMovementTypeRepository { }
+    public class StockMovementTypeRepository(AppDbContext context) : BaseRepository_3<StockMovementType, OutputStockMovementType, InputIdentifierStockMovementType, StockMovementTypeDTO, InternalPropertiesStockMovementTypeDTO, AuxiliaryPropertiesStockMovementTypeDTO>(context), IStockMovementTypeRepository { }
 }

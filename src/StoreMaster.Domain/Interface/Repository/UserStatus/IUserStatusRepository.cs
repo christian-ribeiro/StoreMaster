@@ -4,5 +4,5 @@ using StoreMaster.Domain.Interface.Repository.Base;
 
 namespace StoreMaster.Domain.Interface.Repository
 {
-    public interface IUserStatusRepository : IBaseRepository_2<OutputUserStatus, InputIdentifierUserStatus, UserStatusDTO, InternalPropertiesUserStatusDTO, AuxiliaryPropertiesUserStatusDTO> { }
+    public interface IUserStatusRepository : IBaseRepository_3<OutputUserStatus, InputIdentifierUserStatus, UserStatusDTO, InternalPropertiesUserStatusDTO, AuxiliaryPropertiesUserStatusDTO> { }
 }

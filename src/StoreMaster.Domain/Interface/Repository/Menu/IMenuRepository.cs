@@ -4,5 +4,5 @@ using StoreMaster.Domain.Interface.Repository.Base;
 
 namespace StoreMaster.Domain.Interface.Repository
 {
-    public interface IMenuRepository : IBaseRepository_2<OutputMenu, InputIdentifierMenu, MenuDTO, InternalPropertiesMenuDTO, AuxiliaryPropertiesMenuDTO> { }
+    public interface IMenuRepository : IBaseRepository_3<OutputMenu, InputIdentifierMenu, MenuDTO, InternalPropertiesMenuDTO, AuxiliaryPropertiesMenuDTO> { }
 }

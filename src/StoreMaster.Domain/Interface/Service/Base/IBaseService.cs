@@ -2,7 +2,7 @@
 
 namespace StoreMaster.Domain.Interface.Service.Base
 {
-    public interface IBaseService<TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputReplace, TInputIdentityDelete>
+    public interface IBaseService_0<TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputReplace, TInputIdentityDelete>
         where TOutput : BaseOutput<TOutput>
         where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
         where TInputCreate : BaseInputCreate<TInputCreate>
@@ -26,7 +26,7 @@ namespace StoreMaster.Domain.Interface.Service.Base
     }
 
     #region TInputReplace
-    public interface IBaseService_1<TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete> : IBaseService<TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, BaseInputReplace_0, TInputIdentityDelete>
+    public interface IBaseService_1<TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete> : IBaseService_0<TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, BaseInputReplace_0, TInputIdentityDelete>
     where TOutput : BaseOutput<TOutput>
     where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
     where TInputCreate : BaseInputCreate<TInputCreate>
@@ -37,7 +37,7 @@ namespace StoreMaster.Domain.Interface.Service.Base
     #endregion
 
     #region TInputUpdate TInputIdentityUpdate TInputReplace TInputIdentityDelete
-    public interface IBaseService_2<TOutput, TInputIdentifier, TInputCreate> : IBaseService<TOutput, TInputIdentifier, TInputCreate, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputReplace_0, BaseInputIdentityDelete_0>
+    public interface IBaseService_2<TOutput, TInputIdentifier, TInputCreate> : IBaseService_0<TOutput, TInputIdentifier, TInputCreate, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputReplace_0, BaseInputIdentityDelete_0>
     where TOutput : BaseOutput<TOutput>
     where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
     where TInputCreate : BaseInputCreate<TInputCreate>
@@ -45,7 +45,7 @@ namespace StoreMaster.Domain.Interface.Service.Base
     #endregion
 
     #region TInputCreate TInputUpdate TInputIdentityUpdate TInputReplace TInputIdentityDelete
-    public interface IBaseService_3<TOutput, TInputIdentifier> : IBaseService<TOutput, TInputIdentifier, BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputReplace_0, BaseInputIdentityDelete_0>
+    public interface IBaseService_3<TOutput, TInputIdentifier> : IBaseService_0<TOutput, TInputIdentifier, BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputReplace_0, BaseInputIdentityDelete_0>
     where TOutput : BaseOutput<TOutput>
     where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
     { }
