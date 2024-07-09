@@ -8,7 +8,7 @@ namespace StoreMaster.API.Extensions
         public static IServiceCollection ConfigureContext(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration["ConnectionStrings:Default"];
-            services.AddDbContext<AppDbContext>(cfg => cfg.UseMySQL(connectionString));
+            services.AddDbContext<AppDbContext>(cfg => cfg.UseMySQL(connectionString).EnableSensitiveDataLogging());
 
             return services;
         }

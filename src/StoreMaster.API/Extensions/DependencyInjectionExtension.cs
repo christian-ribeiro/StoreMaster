@@ -18,6 +18,8 @@ namespace StoreMaster.API.Extensions
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserStatusRepository, UserStatusRepository>();
+            services.AddScoped<IMenuRepository, MenuRepository>();
+            services.AddScoped<IUserMenuRepository, UserMenuRepository>();
             #endregion
 
             #region Service
@@ -30,6 +32,8 @@ namespace StoreMaster.API.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserStatusService, UserStatusService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IMenuService, MenuService>();
+            services.AddScoped<IUserMenuService, UserMenuService>();
             #endregion
             return services;
         }

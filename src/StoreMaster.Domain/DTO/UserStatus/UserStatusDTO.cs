@@ -3,7 +3,7 @@ using StoreMaster.Domain.DTO.Base;
 
 namespace StoreMaster.Domain.DTO
 {
-    public class UserStatusDTO : BaseDTO_2<OutputUserStatus, InputIdentifierUserStatus, UserStatusDTO, InternalPropertiesUserStatusDTO, AuxiliaryPropertiesUserStatusDTO>
+    public class UserStatusDTO : BaseDTO_3<OutputUserStatus, InputIdentifierUserStatus, UserStatusDTO, InternalPropertiesUserStatusDTO, AuxiliaryPropertiesUserStatusDTO>
     {
 #nullable disable
         public static UserStatusDTO GetDTO(OutputUserStatus output)

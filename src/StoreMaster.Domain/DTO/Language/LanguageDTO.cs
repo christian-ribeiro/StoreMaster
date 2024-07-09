@@ -3,7 +3,7 @@ using StoreMaster.Domain.DTO.Base;
 
 namespace StoreMaster.Domain.DTO
 {
-    public class LanguageDTO : BaseDTO_2<OutputLanguage, InputIdentifierLanguage, LanguageDTO, InternalPropertiesLanguageDTO, AuxiliaryPropertiesLanguageDTO>
+    public class LanguageDTO : BaseDTO_3<OutputLanguage, InputIdentifierLanguage, LanguageDTO, InternalPropertiesLanguageDTO, AuxiliaryPropertiesLanguageDTO>
     {
 #nullable disable
         public static LanguageDTO GetDTO(OutputLanguage output)

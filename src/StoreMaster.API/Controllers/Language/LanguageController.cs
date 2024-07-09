@@ -4,5 +4,5 @@ using StoreMaster.Domain.Interface.Service;
 
 namespace StoreMaster.API.Controllers
 {
-    public class LanguageController(ILanguageService service, IUserService userService) : BaseController_2<ILanguageService, OutputLanguage, InputIdentifierLanguage>(service, userService) { }
+    public class LanguageController(ILanguageService service, IUserService userService) : BaseController_3<ILanguageService, OutputLanguage, InputIdentifierLanguage>(service, userService) { }
 }

@@ -3,5 +3,5 @@ using StoreMaster.Domain.Interface.Service.Base;
 
 namespace StoreMaster.Domain.Interface.Service
 {
-    public interface IStockMovementTypeService : IBaseService_2<OutputStockMovementType, InputIdentifierStockMovementType> { }
+    public interface IStockMovementTypeService : IBaseService_3<OutputStockMovementType, InputIdentifierStockMovementType> { }
 }

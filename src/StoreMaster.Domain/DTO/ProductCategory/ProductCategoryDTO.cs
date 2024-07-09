@@ -3,7 +3,7 @@ using StoreMaster.Domain.DTO.Base;
 
 namespace StoreMaster.Domain.DTO
 {
-    public class ProductCategoryDTO : BaseDTO<OutputProductCategory, InputIdentifierProductCategory, InputCreateProductCategory, InputUpdateProductCategory, InputIdentityUpdateProductCategory, InputIdentityDeleteProductCategory, ProductCategoryDTO, InternalPropertiesProductCategoryDTO, ExternalPropertiesProductCategoryDTO, AuxiliaryPropertiesProductCategoryDTO>
+    public class ProductCategoryDTO : BaseDTO_1<OutputProductCategory, InputIdentifierProductCategory, InputCreateProductCategory, InputUpdateProductCategory, InputIdentityUpdateProductCategory, InputIdentityDeleteProductCategory, ProductCategoryDTO, InternalPropertiesProductCategoryDTO, ExternalPropertiesProductCategoryDTO, AuxiliaryPropertiesProductCategoryDTO>
     {
 #nullable disable
         public static ProductCategoryDTO GetDTO(OutputProductCategory output)

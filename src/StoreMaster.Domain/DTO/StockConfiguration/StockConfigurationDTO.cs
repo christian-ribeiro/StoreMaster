@@ -3,7 +3,7 @@ using StoreMaster.Domain.DTO.Base;
 
 namespace StoreMaster.Domain.DTO
 {
-    public class StockConfigurationDTO : BaseDTO<OutputStockConfiguration, InputIdentifierStockConfiguration, InputCreateStockConfiguration, InputUpdateStockConfiguration, InputIdentityUpdateStockConfiguration, InputIdentityDeleteStockConfiguration, StockConfigurationDTO, InternalPropertiesStockConfigurationDTO, ExternalPropertiesStockConfigurationDTO, AuxiliaryPropertiesStockConfigurationDTO>
+    public class StockConfigurationDTO : BaseDTO_1<OutputStockConfiguration, InputIdentifierStockConfiguration, InputCreateStockConfiguration, InputUpdateStockConfiguration, InputIdentityUpdateStockConfiguration, InputIdentityDeleteStockConfiguration, StockConfigurationDTO, InternalPropertiesStockConfigurationDTO, ExternalPropertiesStockConfigurationDTO, AuxiliaryPropertiesStockConfigurationDTO>
     {
 #nullable disable
         public static StockConfigurationDTO GetDTO(OutputStockConfiguration output)
