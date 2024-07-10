@@ -77,7 +77,7 @@ namespace StoreMaster.Domain.Service
         {
             var result = (from i in listMenu
                           where i.InternalPropertiesDTO.ParentId == parentId
-                          let userMenu = listUserMenu.FirstOrDefault(j => j.ExternalPropertiesDTO.MenuId == i.InternalPropertiesDTO.Id)
+                          let userMenu = (from j in listUserMenu where j.ExternalPropertiesDTO.MenuId == i.InternalPropertiesDTO.Id select j).FirstOrDefault()
                           let position = userMenu?.ExternalPropertiesDTO.Position ?? i.InternalPropertiesDTO.Position
                           let secondPosition = userMenu?.ExternalPropertiesDTO.SecondPosition ?? 0
                           let favorite = userMenu?.ExternalPropertiesDTO.Favorite ?? false
