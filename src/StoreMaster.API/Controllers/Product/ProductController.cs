@@ -7,18 +7,17 @@ namespace StoreMaster.API.Controllers
 {
     public class ProductController(IProductService service, IUserService userService) : BaseController_1<IProductService, OutputProduct, InputIdentifierProduct, InputCreateProduct, InputUpdateProduct, InputIdentityUpdateProduct, InputIdentityDeleteProduct>(service, userService)
     {
-        [HttpPost("GetListProductBalance/{productCategoryId}")]
-        public ActionResult<OutputAuthentication> GetListProductBalance([FromRoute] long productCategoryId)
+        [HttpGet("GetListProductBalance/{productCategoryId}")]
+        public async Task<ActionResult<List<OutputProductBalance>>> GetListProductBalance([FromRoute] long productCategoryId)
         {
             try
             {
-                return Ok(_service.GetListProductBalance(productCategoryId));
+                return await ResponseAsync(_service.GetListProductBalance(productCategoryId));
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.ToString());
             }
         }
-
     }
 }

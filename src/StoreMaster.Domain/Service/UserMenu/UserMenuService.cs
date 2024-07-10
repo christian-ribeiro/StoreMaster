@@ -63,5 +63,30 @@ namespace StoreMaster.Domain.Service
             List<UserMenuDTO> listOriginalUserMenuDTO = _repository.GetListByListId((from i in listInputIdentityDeleteUserMenu select i.Id).ToList(), true);
             return _repository.Delete(listOriginalUserMenuDTO);
         }
+
+        public List<OutputCompleteUserMenu> GetCompleteMenu()
+        {
+            long loggedUserId = SessionData.GetLoggedUser()?.Id ?? 0;
+            List<MenuDTO> listMenuDTO = _menuRepository.GetAll(true);
+            List<UserMenuDTO> listOriginalUserMenuDTO = _repository.GetListByListIdentifier((from i in listMenuDTO select new InputIdentifierUserMenu(loggedUserId, i.InternalPropertiesDTO.Id)).ToList(), true);
+
+            List<MenuDTO> listPrincipalMenu = (from i in listMenuDTO where i.InternalPropertiesDTO.ParentId == null select i).ToList();
+
+            return (from i in listPrincipalMenu
+                    let userMenu = (from j in listOriginalUserMenuDTO where j.ExternalPropertiesDTO.MenuId == i.InternalPropertiesDTO.Id select j).FirstOrDefault()
+                    let position = userMenu != null ? userMenu.ExternalPropertiesDTO.Position : i.InternalPropertiesDTO.Position
+                    let secondPosition = userMenu != null ? userMenu.ExternalPropertiesDTO.SecondPosition : 0
+                    let favorite = userMenu != null ? userMenu.ExternalPropertiesDTO.Favorite : false
+                    let visible = userMenu != null ? !userMenu.ExternalPropertiesDTO.Visible : i.InternalPropertiesDTO.Visible
+                    let listMenuItem = (from j in listMenuDTO
+                                        where j.InternalPropertiesDTO.ParentId == i.InternalPropertiesDTO.Id
+                                        let userMenu = (from k in listOriginalUserMenuDTO where k.ExternalPropertiesDTO.MenuId == j.InternalPropertiesDTO.Id select k).FirstOrDefault()
+                                        let position = userMenu != null ? userMenu.ExternalPropertiesDTO.Position : i.InternalPropertiesDTO.Position
+                                        let secondPosition = userMenu != null ? userMenu.ExternalPropertiesDTO.SecondPosition : 0
+                                        let favorite = userMenu != null ? userMenu.ExternalPropertiesDTO.Favorite : false
+                                        let visible = userMenu != null ? !userMenu.ExternalPropertiesDTO.Visible : i.InternalPropertiesDTO.Visible
+                                        select new OutputCompleteUserMenu(j.InternalPropertiesDTO.Id, position, secondPosition, favorite, visible, j.InternalPropertiesDTO.Id, j.InternalPropertiesDTO.Path, j.InternalPropertiesDTO.Label, j.InternalPropertiesDTO.ToolTip, default)).ToList()
+                    select new OutputCompleteUserMenu(i.InternalPropertiesDTO.Id, position, secondPosition, favorite, visible, i.InternalPropertiesDTO.Id, i.InternalPropertiesDTO.Path, i.InternalPropertiesDTO.Label, i.InternalPropertiesDTO.ToolTip, listMenuItem)).ToList();
+        }
     }
 }
