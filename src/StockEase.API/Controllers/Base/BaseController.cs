@@ -1,0 +1,336 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using StockEase.Arguments;
+using StockEase.Arguments.Arguments.Base;
+using StockEase.Domain.Interface.Service;
+using StockEase.Domain.Interface.Service.Base;
+
+namespace StockEase.API.Controllers.Base
+{
+    [Authorize]
+    [ApiController]
+    [Route("/api/[controller]")]
+    public class BaseController_0<TService, TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputReplace, TInputIdentityDelete>(TService service, IUserService userService) : Controller
+        where TService : IBaseService_0<TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputReplace, TInputIdentityDelete>
+        where TOutput : BaseOutput<TOutput>
+        where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
+        where TInputCreate : BaseInputCreate<TInputCreate>
+        where TInputUpdate : BaseInputUpdate<TInputUpdate>
+        where TInputIdentityUpdate : BaseInputIdentityUpdate<TInputUpdate>
+        where TInputReplace : BaseInputReplace<TInputReplace>
+        where TInputIdentityDelete : BaseInputIdentityDelete<TInputIdentityDelete>
+    {
+        protected readonly TService _service = service;
+        private readonly IUserService _userService = userService;
+
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            var allowAnonymous = context.ActionDescriptor.EndpointMetadata.Any(em => em.GetType() == typeof(AllowAnonymousAttribute));
+
+            if (!allowAnonymous)
+            {
+                long userId = Convert.ToInt64(Request.HttpContext.User.FindFirst("UserId").Value ?? "");
+                var loggedUser = _userService.Get(userId);
+
+                SessionData.SetLoggedUser(new LoggedUser(loggedUser.Id, loggedUser.Code, loggedUser.Name, loggedUser.Email, loggedUser.LanguageId, loggedUser.UserStatusId));
+            }
+
+            base.OnActionExecuting(context);
+        }
+
+        #region Read
+        [HttpGet("{id}")]
+        public virtual async Task<ActionResult<BaseResponseApi<TOutput>>> Get(long id)
+        {
+            try
+            {
+                return await ResponseAsync(_service.Get(id));
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+        }
+
+        [HttpPost("GetByIdentifier")]
+        public virtual async Task<ActionResult<BaseResponseApi<TOutput>>> GetByIdentifier(TInputIdentifier inputIdentifier)
+        {
+            try
+            {
+                return await ResponseAsync(_service.GetByIdentifier(inputIdentifier));
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+        }
+
+        [HttpGet]
+        public virtual async Task<ActionResult<BaseResponseApi<List<TOutput>>>> GetAll()
+        {
+            try
+            {
+                return await ResponseAsync(_service.GetAll());
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+        }
+
+        [HttpPost("GetListByListIdentifier")]
+        public virtual async Task<ActionResult<BaseResponseApi<TOutput>>> GetListByListIdentifier(List<TInputIdentifier> listInputIdentifier)
+        {
+            try
+            {
+                return await ResponseAsync(_service.GetListByListIdentifier(listInputIdentifier));
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+        }
+
+        [HttpPost("GetListByListId")]
+        public virtual async Task<ActionResult<BaseResponseApi<TOutput>>> GetListByListId(List<long> listId)
+        {
+            try
+            {
+                return await ResponseAsync(_service.GetListByListId(listId));
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+        }
+        #endregion
+
+        #region Create
+        [HttpPost("Create")]
+        public virtual async Task<ActionResult<BaseResponseApi<long>>> Create(TInputCreate inputCreate)
+        {
+            try
+            {
+                return await ResponseAsync(_service?.Create(inputCreate), 201);
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+        }
+
+        [HttpPost("Create/Multiple")]
+        public virtual async Task<ActionResult<BaseResponseApi<List<long>>>> Create(List<TInputCreate> listInputCreate)
+        {
+            try
+            {
+                return await ResponseAsync(_service?.Create(listInputCreate), 201);
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+        }
+        #endregion
+
+        #region Update
+        [HttpPut("Update")]
+        public virtual async Task<ActionResult<BaseResponseApi<long>>> Update(TInputIdentityUpdate inputIdentityUpdate)
+        {
+            try
+            {
+                return await ResponseAsync(_service.Update(inputIdentityUpdate));
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+        }
+
+        [HttpPut("Update/Multiple")]
+        public virtual async Task<ActionResult<BaseResponseApi<List<long>>>> Update(List<TInputIdentityUpdate> listInputIdentityUpdate)
+        {
+            try
+            {
+                return await ResponseAsync(_service.Update(listInputIdentityUpdate));
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+        }
+        #endregion
+
+        #region Replace
+        [HttpPost("Replace/Multiple")]
+        public virtual async Task<ActionResult<BaseResponseApi<List<long>>>> Replace(List<TInputReplace> listInputReplace)
+        {
+            try
+            {
+                return await ResponseAsync(_service.Replace(listInputReplace));
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+        }
+        #endregion
+
+        #region Delete
+        [HttpDelete("Delete")]
+        public virtual async Task<ActionResult<BaseResponseApi<bool>>> Delete(TInputIdentityDelete inputIdentityDelete)
+        {
+            try
+            {
+                return await ResponseAsync(_service?.Delete(inputIdentityDelete));
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+        }
+
+        [HttpDelete("Delete/Multiple")]
+        public virtual async Task<ActionResult<BaseResponseApi<bool>>> Delete(List<TInputIdentityDelete> listInputIdentityDelete)
+        {
+            try
+            {
+                return await ResponseAsync(_service?.Delete(listInputIdentityDelete));
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+        }
+        #endregion
+
+        #region Internal
+        [NonAction]
+        public async Task<ActionResult> ResponseAsync<ResponseType>(ResponseType result, int statusCode = 0)
+        {
+            try
+            {
+                return await Task.FromResult(StatusCode(statusCode == 0 ? 200 : statusCode, new BaseResponseApi<ResponseType> { Result = result }));
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(BadRequest(new BaseResponseApi<string> { ErrorMessage = $"Houve um problema interno com o servidor. Entre em contato com o Administrador do sistema caso o problema persista. Erro interno: {ex.Message}" }));
+            }
+        }
+
+        [NonAction]
+        public async Task<ActionResult> ResponseExceptionAsync(Exception ex)
+        {
+            return await Task.FromResult(BadRequest(new BaseResponseApi<string> { ErrorMessage = ex.Message }));
+        }
+        #endregion
+    }
+
+    #region TInputReplace
+    public class BaseController_1<TService, TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete>(TService service, IUserService userService) : BaseController_0<TService, TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, BaseInputReplace_0, TInputIdentityDelete>(service, userService)
+    where TService : IBaseService_1<TOutput, TInputIdentifier, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete>
+    where TOutput : BaseOutput<TOutput>
+    where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
+    where TInputCreate : BaseInputCreate<TInputCreate>
+    where TInputUpdate : BaseInputUpdate<TInputUpdate>
+    where TInputIdentityUpdate : BaseInputIdentityUpdate<TInputUpdate>
+    where TInputIdentityDelete : BaseInputIdentityDelete<TInputIdentityDelete>
+    {
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override Task<ActionResult<BaseResponseApi<List<long>>>> Replace(List<BaseInputReplace_0> listInputReplace)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    #endregion
+
+    #region TInputUpdate TInputIdentityUpdate TInputReplace TInputIdentityDelete
+    public class BaseController_2<TService, TOutput, TInputIdentifier, TInputCreate>(TService service, IUserService userService) : BaseController_0<TService, TOutput, TInputIdentifier, TInputCreate, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputReplace_0, BaseInputIdentityDelete_0>(service, userService)
+    where TService : IBaseService_2<TOutput, TInputIdentifier, TInputCreate>
+    where TOutput : BaseOutput<TOutput>
+    where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
+    where TInputCreate : BaseInputCreate<TInputCreate>
+    {
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override Task<ActionResult<BaseResponseApi<long>>> Update(BaseInputIdentityUpdate_0 inputIdentityUpdate)
+        {
+            throw new NotImplementedException();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override Task<ActionResult<BaseResponseApi<List<long>>>> Update(List<BaseInputIdentityUpdate_0> listInputIdentityUpdate)
+        {
+            throw new NotImplementedException();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override Task<ActionResult<BaseResponseApi<List<long>>>> Replace(List<BaseInputReplace_0> listInputReplace)
+        {
+            throw new NotImplementedException();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override Task<ActionResult<BaseResponseApi<bool>>> Delete(BaseInputIdentityDelete_0 inputIdentityDelete)
+        {
+            throw new NotImplementedException();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override Task<ActionResult<BaseResponseApi<bool>>> Delete(List<BaseInputIdentityDelete_0> listInputIdentityDelete)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    #endregion
+
+    #region TInputCreate TInputUpdate TInputIdentityUpdate TInputReplace TInputIdentityDelete
+    public class BaseController_3<TService, TOutput, TInputIdentifier>(TService service, IUserService userService) : BaseController_0<TService, TOutput, TInputIdentifier, BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputReplace_0, BaseInputIdentityDelete_0>(service, userService)
+    where TService : IBaseService_3<TOutput, TInputIdentifier>
+    where TOutput : BaseOutput<TOutput>
+    where TInputIdentifier : BaseInputIdentifier<TInputIdentifier>, new()
+    {
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override Task<ActionResult<BaseResponseApi<long>>> Create(BaseInputCreate_0 inputCreate)
+        {
+            throw new NotImplementedException();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override Task<ActionResult<BaseResponseApi<List<long>>>> Create(List<BaseInputCreate_0> listInputCreate)
+        {
+            throw new NotImplementedException();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override Task<ActionResult<BaseResponseApi<long>>> Update(BaseInputIdentityUpdate_0 inputIdentityUpdate)
+        {
+            throw new NotImplementedException();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override Task<ActionResult<BaseResponseApi<List<long>>>> Update(List<BaseInputIdentityUpdate_0> listInputIdentityUpdate)
+        {
+            throw new NotImplementedException();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override Task<ActionResult<BaseResponseApi<List<long>>>> Replace(List<BaseInputReplace_0> listInputReplace)
+        {
+            throw new NotImplementedException();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override Task<ActionResult<BaseResponseApi<bool>>> Delete(BaseInputIdentityDelete_0 inputIdentityDelete)
+        {
+            throw new NotImplementedException();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override Task<ActionResult<BaseResponseApi<bool>>> Delete(List<BaseInputIdentityDelete_0> listInputIdentityDelete)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    #endregion
+}

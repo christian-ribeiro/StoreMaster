@@ -1,0 +1,41 @@
+﻿using StockEase.Domain.Interface.Repository;
+using StockEase.Domain.Interface.Service;
+using StockEase.Domain.Service;
+using StockEase.Infrastructure.Persistence.Repository;
+
+namespace StockEase.API.Extensions
+{
+    public static class DependencyInjectionExtension
+    {
+        public static IServiceCollection ConfigureDependencyInjection(this IServiceCollection services)
+        {
+            #region Repository
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
+            services.AddScoped<IStockConfigurationRepository, StockConfigurationRepository>();
+            services.AddScoped<IStockMovementRepository, StockMovementRepository>();
+            services.AddScoped<IStockMovementTypeRepository, StockMovementTypeRepository>();
+            services.AddScoped<ILanguageRepository, LanguageRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserStatusRepository, UserStatusRepository>();
+            services.AddScoped<IMenuRepository, MenuRepository>();
+            services.AddScoped<IUserMenuRepository, UserMenuRepository>();
+            #endregion
+
+            #region Service
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IProductCategoryService, ProductCategoryService>();
+            services.AddScoped<IStockConfigurationService, StockConfigurationService>();
+            services.AddScoped<IStockMovementService, StockMovementService>();
+            services.AddScoped<IStockMovementTypeService, StockMovementTypeService>();
+            services.AddScoped<ILanguageService, LanguageService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserStatusService, UserStatusService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IMenuService, MenuService>();
+            services.AddScoped<IUserMenuService, UserMenuService>();
+            #endregion
+            return services;
+        }
+    }
+}
